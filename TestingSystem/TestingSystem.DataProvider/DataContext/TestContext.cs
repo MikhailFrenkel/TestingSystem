@@ -8,7 +8,7 @@ using TestingSystem.Model;
 
 namespace TestingSystem.DataProvider.DataContext
 {
-    class TestContext : DbContext
+    public class TestContext : DbContext
     {
         public DbSet<Theme> Themes { get; set; }
         public DbSet<Test> Tests { get; set; }

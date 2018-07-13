@@ -9,7 +9,7 @@ using TestingSystem.Model;
 
 namespace TestingSystem.DataProvider.Repositories
 {
-    class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private TestContext db;
         private ThemeRepository themeRepository;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestingSystem.DataProvider.Interfaces
 {
-    interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
         T GetById(int id);
