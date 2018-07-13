@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestingSystem.Model
 {
-    class Theme
+    public class Theme
     {
         public int Id { get; set; }
         public string Title { get; set; }
