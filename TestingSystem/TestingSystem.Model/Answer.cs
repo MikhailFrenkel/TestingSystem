@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace TestingSystem.Model
 {
-    public class Theme
+    class Answer
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public IEnumerable<Test> Tests { get; set; }
+        public string Text { get; set; }
     }
 }
