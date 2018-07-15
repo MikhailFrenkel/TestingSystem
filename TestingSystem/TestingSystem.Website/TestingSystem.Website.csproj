@@ -95,6 +95,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\TestingSystemStore.mdf" />
+    <Content Include="App_Data\TestingSystemStore_log.ldf">
+      <DependentUpon>TestingSystemStore.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -137,13 +141,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestingSystem.DataProvider\TestingSystem.DataProvider.csproj">
       <Project>{e58f9381-3207-4181-8eaf-8e9ad17f9479}</Project>
       <Name>TestingSystem.DataProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestingSystem.Model\TestingSystem.Model.csproj">
+      <Project>{24133FD6-6348-4716-8009-03E378A46263}</Project>
+      <Name>TestingSystem.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

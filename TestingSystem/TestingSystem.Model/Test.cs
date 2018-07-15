@@ -13,5 +13,6 @@ namespace TestingSystem.Model
         public string Description { get; set; }
         public int Duration { get; set; }
         public IEnumerable<Question> Questions { get; set; }
+        public int ThemeId { get; set; }
     }
 }

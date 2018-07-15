@@ -10,6 +10,10 @@ namespace TestingSystem.DataProvider.DataContext
 {
     public class TestContext : DbContext
     {
+        /*public TestContext() : base("TestingSystem.DataProvider.DataContext.TestContext")
+        {
+        }*/
+
         public DbSet<Theme> Themes { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<Question> Questions { get; set; }
