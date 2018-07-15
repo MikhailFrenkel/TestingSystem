@@ -5,11 +5,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Список тем:</h2>
-<ul>
-    @foreach (var theme in Model)
-    {
-        <li>@theme.Title</li>
-    }
-</ul>
+
+@foreach (var theme in Model)
+{
+    <ul>@theme.Title
+        @foreach (var test in theme.Tests)
+        {
+            <li>@test.Name</li>
+        }
+    </ul>
+}
+
 

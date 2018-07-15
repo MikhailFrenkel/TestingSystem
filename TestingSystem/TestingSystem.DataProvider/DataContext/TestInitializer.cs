@@ -40,7 +40,7 @@ namespace TestingSystem.DataProvider.DataContext
             {
                 Id = 1,
                 Text = "Выберите a2",
-                CorrectAnswers = new List<Answer>(){ a2 },
+                CorrectAnswers = new List<Answer>() { a2 },
                 Answers = new List<Answer>() { a1, a2, a3, a4 },
                 TestId = 1
             };
@@ -60,8 +60,8 @@ namespace TestingSystem.DataProvider.DataContext
             db.Answers.Add(a4);
             db.Questions.Add(q1);
             db.Tests.Add(t1);
-            db.Themes.Add(new Theme { Id = 1, Title = "Программирование", Tests = new List<Test>() {t1}});
-
+            db.Themes.Add(new Theme { Id = 1, Title = "Программирование", Tests  = new List<Test>() { t1 } });
+            db.SaveChanges();
             base.Seed(db);
         }
     }
