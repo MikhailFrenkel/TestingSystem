@@ -33,11 +33,14 @@ namespace TestingSystem.DataProvider.Repositories
 
         public IEnumerable<Theme> GetAll()
         {
+            //return db.Themes.Include("Tests").ToList();
             return db.Themes;
         }
 
         public Theme GetById(int id)
         {
+            /*Theme _theme = db.Themes.Find(id);
+            db.Entry(_theme).Collection("Tests").Load();*/
             return db.Themes.Find(id);
         }
 

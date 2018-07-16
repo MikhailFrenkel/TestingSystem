@@ -19,7 +19,8 @@ namespace TestingSystem.Website.Controllers
 
         public ActionResult Index()
         {
-            return View(_unitOfWork.Themes.GetAll());
+
+            return View(_unitOfWork.Tests.GetById(1).Theme);
         }
     }
 }

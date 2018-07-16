@@ -18,5 +18,12 @@ namespace TestingSystem.DataProvider.DataContext
         public DbSet<Test> Tests { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
+
+        /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Theme>()
+                .HasMany(x => x.Tests)
+                .WithOptional(x => x.Theme);
+        }*/
     }
 }

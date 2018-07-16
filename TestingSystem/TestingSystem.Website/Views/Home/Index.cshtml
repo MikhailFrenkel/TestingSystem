@@ -1,19 +1,18 @@
 ﻿@using TestingSystem.Model;
-@model IEnumerable<Theme>
+@model Theme
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Index";
 }
 
 
-@foreach (var theme in Model)
-{
-    <ul>@theme.Title
-        @foreach (var test in theme.Tests)
+
+
+    <ul>@Model.Title
+        @foreach (var test in Model.Tests)
         {
             <li>@test.Name</li>
         }
     </ul>
-}
 
 

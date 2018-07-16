@@ -13,11 +13,6 @@ namespace TestingSystem.Model
         public string Description { get; set; }
         public int Duration { get; set; }
         public ICollection<Question> Questions { get; set; }
-        public int ThemeId { get; set; }
-
-        public Test()
-        {
-            Questions = new List<Question>();
-        }
+        public virtual Theme Theme { get; set; }
     }
 }
