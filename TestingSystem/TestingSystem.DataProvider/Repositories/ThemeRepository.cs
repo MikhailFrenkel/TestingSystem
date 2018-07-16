@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TestingSystem.DataProvider.DataContext;
 using TestingSystem.DataProvider.Interfaces;
 using TestingSystem.Model;
@@ -16,7 +12,7 @@ namespace TestingSystem.DataProvider.Repositories
 
         public ThemeRepository(TestContext context)
         {
-            this.db = context;
+            db = context;
         }
 
         public void Create(Theme item)
@@ -33,14 +29,11 @@ namespace TestingSystem.DataProvider.Repositories
 
         public IEnumerable<Theme> GetAll()
         {
-            //return db.Themes.Include("Tests").ToList();
             return db.Themes;
         }
 
         public Theme GetById(int id)
         {
-            /*Theme _theme = db.Themes.Find(id);
-            db.Entry(_theme).Collection("Tests").Load();*/
             return db.Themes.Find(id);
         }
 

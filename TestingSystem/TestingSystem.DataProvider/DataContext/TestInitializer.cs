@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestingSystem.Model;
 
 namespace TestingSystem.DataProvider.DataContext
@@ -12,7 +8,7 @@ namespace TestingSystem.DataProvider.DataContext
     {
         protected override void Seed(TestContext db)
         {
-            List<Answer> _answers = new List<Answer>()
+            List<Answer> answers = new List<Answer>()
             {
                 new Answer() { Id = 1, Text = "a1", },
                 new Answer() { Id = 2, Text = "a2", },
@@ -25,8 +21,8 @@ namespace TestingSystem.DataProvider.DataContext
                 new Question() {
                     Id = 1,
                     Text = "Выберите a2",
-                    CorrectAnswers = _answers.GetRange(1, 1),
-                    Answers = _answers
+                    CorrectAnswers = answers.GetRange(1, 1),
+                    Answers = answers
                 }
             };
 
@@ -41,7 +37,7 @@ namespace TestingSystem.DataProvider.DataContext
                 }
             };
 
-            List<Theme> _themes = new List<Theme>()
+            List<Theme> themes = new List<Theme>()
             {
                 new Theme
                 {
@@ -51,10 +47,10 @@ namespace TestingSystem.DataProvider.DataContext
                 }
             };
 
-            db.Answers.AddRange(_answers);
+            db.Answers.AddRange(answers);
             db.Questions.AddRange(q1);
             db.Tests.AddRange(t1);
-            db.Themes.AddRange(_themes);
+            db.Themes.AddRange(themes);
             db.SaveChanges();
             base.Seed(db);
         }

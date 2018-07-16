@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestingSystem.DataProvider.DataContext;
 using TestingSystem.DataProvider.Interfaces;
 using TestingSystem.Model;
@@ -16,7 +12,7 @@ namespace TestingSystem.DataProvider.Repositories
 
         public TestRepository(TestContext context)
         {
-            this.db = context;
+            db = context;
         }
 
         public void Create(Test item)

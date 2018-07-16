@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestingSystem.DataProvider.DataContext;
 using TestingSystem.DataProvider.Interfaces;
 using TestingSystem.Model;
@@ -12,9 +8,9 @@ namespace TestingSystem.DataProvider.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private TestContext db;
-        private ThemeRepository themeRepository;
-        private TestRepository testRepository;
-        private QuestionRepository questionRepository;
+        private ThemeRepository _themeRepository;
+        private TestRepository _testRepository;
+        private QuestionRepository _questionRepository;
 
         public UnitOfWork()
         {
@@ -25,9 +21,9 @@ namespace TestingSystem.DataProvider.Repositories
         {
             get
             {
-                if (themeRepository == null)
-                    themeRepository = new ThemeRepository(db);
-                return themeRepository;
+                if (_themeRepository == null)
+                    _themeRepository = new ThemeRepository(db);
+                return _themeRepository;
             }
         }
 
@@ -35,9 +31,9 @@ namespace TestingSystem.DataProvider.Repositories
         {
             get
             {
-                if (testRepository == null)
-                    testRepository = new TestRepository(db);
-                return testRepository;
+                if (_testRepository == null)
+                    _testRepository = new TestRepository(db);
+                return _testRepository;
             }
         }
 
@@ -45,9 +41,9 @@ namespace TestingSystem.DataProvider.Repositories
         {
             get
             {
-                if (questionRepository == null)
-                    questionRepository = new QuestionRepository(db);
-                return questionRepository;
+                if (_questionRepository == null)
+                    _questionRepository = new QuestionRepository(db);
+                return _questionRepository;
             }
         }
 
