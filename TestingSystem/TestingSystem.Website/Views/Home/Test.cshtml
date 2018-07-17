@@ -1,0 +1,31 @@
+﻿@model IEnumerable<TestingSystem.Model.Theme>
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<ul>
+    @foreach (var theme in Model)
+    {
+
+        <li>@theme.Title</li>
+        <ul>
+            @foreach (var test in theme.Tests)
+             {
+                 <li>@test.Name</li>
+                 <ul>
+                    @foreach (var question in test.Questions)
+                    {
+                        <li>@question.Text</li>
+                        <ul>
+                            @foreach (var answer in question.Answers)
+                            {
+                                <li>@answer.Text - @answer.isCorrect</li>
+                            }
+                        </ul>
+                    }
+                 </ul>   
+             }
+         </ul>
+    }
+</ul>
+

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using TestingSystem.DataProvider.DataContext;
-using TestingSystem.DataProvider.Interfaces;
+using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
 using System.Data.Entity;
+using System.Linq;
 
 namespace TestingSystem.DataProvider.Repositories
 {
-    class ThemeRepository : IRepository<Theme>
+    public class ThemeRepository : IRepository<Theme>
     {
         private TestContext db;
 
@@ -29,7 +30,7 @@ namespace TestingSystem.DataProvider.Repositories
 
         public IEnumerable<Theme> GetAll()
         {
-            return db.Themes;
+            return db.Themes.ToList();
         }
 
         public Theme GetById(int id)

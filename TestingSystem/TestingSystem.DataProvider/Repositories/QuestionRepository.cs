@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using TestingSystem.DataProvider.DataContext;
-using TestingSystem.DataProvider.Interfaces;
+using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
 
 namespace TestingSystem.DataProvider.Repositories
 {
-    class QuestionRepository : IRepository<Question>
+    public class QuestionRepository : IRepository<Question>
     {
         private TestContext db;
 
@@ -29,7 +30,7 @@ namespace TestingSystem.DataProvider.Repositories
 
         public IEnumerable<Question> GetAll()
         {
-            return db.Questions;
+            return db.Questions.ToList();
         }
 
         public Question GetById(int id)

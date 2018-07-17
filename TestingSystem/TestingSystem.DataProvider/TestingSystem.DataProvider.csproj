@@ -66,9 +66,8 @@
   <ItemGroup>
     <Compile Include="DataContext\TestContext.cs" />
     <Compile Include="DataContext\TestInitializer.cs" />
-    <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AnswerRepository.cs" />
     <Compile Include="Repositories\QuestionRepository.cs" />
     <Compile Include="Repositories\TestRepository.cs" />
     <Compile Include="Repositories\ThemeRepository.cs" />
@@ -78,6 +77,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TestingSystem.Common\TestingSystem.Common.csproj">
+      <Project>{34ad3ba9-3ada-4d60-ab70-baa3e665a05b}</Project>
+      <Name>TestingSystem.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestingSystem.Model\TestingSystem.Model.csproj">
       <Project>{24133fd6-6348-4716-8009-03e378a46263}</Project>
       <Name>TestingSystem.Model</Name>

@@ -44,6 +44,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.0\lib\net451\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -117,12 +123,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Admin\AnswerController.cs" />
+    <Compile Include="Controllers\Admin\QuestionController.cs" />
+    <Compile Include="Controllers\Admin\TestController.cs" />
+    <Compile Include="Controllers\Admin\ThemeController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\AutofacConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -133,6 +145,20 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\CreateTheme.cshtml" />
+    <Content Include="Views\Admin\DeleteTheme.cshtml" />
+    <Content Include="Views\Admin\EditTheme.cshtml" />
+    <Content Include="Views\Admin\CreateTest.cshtml" />
+    <Content Include="Views\Theme\Index.cshtml" />
+    <Content Include="Views\Theme\CreateTheme.cshtml" />
+    <Content Include="Views\Theme\DeleteTheme.cshtml" />
+    <Content Include="Views\Theme\EditTheme.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\CreateTest.cshtml" />
+    <Content Include="Views\Test\DeleteTest.cshtml" />
+    <Content Include="Views\Test\EditTest.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -142,8 +168,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Views\Answer\" />
+    <Folder Include="Views\Question\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TestingSystem.Common\TestingSystem.Common.csproj">
+      <Project>{34ad3ba9-3ada-4d60-ab70-baa3e665a05b}</Project>
+      <Name>TestingSystem.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestingSystem.DataProvider\TestingSystem.DataProvider.csproj">
       <Project>{e58f9381-3207-4181-8eaf-8e9ad17f9479}</Project>
       <Name>TestingSystem.DataProvider</Name>

@@ -1,21 +1,35 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
+using TestingSystem.Common.Interfaces;
 using TestingSystem.DataProvider.Repositories;
+using TestingSystem.Model;
 
 namespace TestingSystem.Website.Controllers
 {
     public class HomeController : Controller
     {
-        private UnitOfWork _unitOfWork;
+        private readonly IRepository<Answer> _answerRepository;
+        private readonly IRepository<Question> _questionRepository;
+        private readonly IRepository<Test> _testRepository;
+        private readonly IRepository<Theme> _themeRepository;
 
-        public HomeController()
+        public HomeController(IRepository<Answer> answer, IRepository<Question> question,
+                              IRepository<Test> test, IRepository<Theme> theme)
         {
-            _unitOfWork = new UnitOfWork();
+            _answerRepository = answer;
+            _questionRepository = question;
+            _testRepository = test;
+            _themeRepository = theme;
         }
 
         public ActionResult Index()
         {
+            return View();
+        }
 
-            return View(_unitOfWork.Tests.GetById(1).Theme);
+        public ActionResult Test()
+        {
+            return View(_themeRepository.GetAll());
         }
     }
 }

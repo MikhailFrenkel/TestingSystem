@@ -1,0 +1,44 @@
+﻿@model IEnumerable<TestingSystem.Model.Theme>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "CreateTheme")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tests.Count)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tests.Count)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditTheme", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteTheme", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+

@@ -6,8 +6,12 @@ namespace TestingSystem.Model
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        public ICollection<Answer> CorrectAnswers { get; set; }
-        public ICollection<Answer> Answers { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; }
         public virtual Test Test { get; set; }
+
+        public Question()
+        {
+            Answers = new List<Answer>();
+        }
     }
 }

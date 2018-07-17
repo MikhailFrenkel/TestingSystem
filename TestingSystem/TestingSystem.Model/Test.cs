@@ -8,7 +8,12 @@ namespace TestingSystem.Model
         public string Name { get; set; }
         public string Description { get; set; }
         public int Duration { get; set; }
-        public ICollection<Question> Questions { get; set; }
+        public virtual ICollection<Question> Questions { get; set; }
         public virtual Theme Theme { get; set; }
+
+        public Test()
+        {
+            Questions = new List<Question>();
+        }
     }
 }

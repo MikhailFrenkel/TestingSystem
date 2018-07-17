@@ -8,28 +8,27 @@ namespace TestingSystem.DataProvider.DataContext
     {
         protected override void Seed(TestContext db)
         {
-            List<Answer> answers = new List<Answer>()
+            /*List<Answer> answers = new List<Answer>()
             {
-                new Answer() { Id = 1, Text = "a1", },
-                new Answer() { Id = 2, Text = "a2", },
-                new Answer() { Id = 3, Text = "a3", },
-                new Answer() { Id = 4, Text = "a4", }
+                new Answer() { Text = "a1", isCorrect = false },
+                new Answer() { Text = "a2", isCorrect = true },
+                new Answer() { Text = "a3", isCorrect = false },
+                new Answer() { Text = "a4", isCorrect = false }
             };
 
             List<Question> q1 = new List<Question>()
             {
-                new Question() {
-                    Id = 1,
+                new Question()
+                {
                     Text = "Выберите a2",
-                    CorrectAnswers = answers.GetRange(1, 1),
                     Answers = answers
                 }
             };
 
             List<Test> t1 = new List<Test>()
             {
-                new Test() {
-                    Id = 1,
+                new Test()
+                {
                     Name = "Базовые понятия C#",
                     Description = "что-то здесь будет",
                     Duration = 15,
@@ -41,15 +40,45 @@ namespace TestingSystem.DataProvider.DataContext
             {
                 new Theme
                 {
-                    Id = 1,
                     Title = "Программирование",
                     Tests = t1
                 }
+            };*/
+
+            List<Theme> themes = new List<Theme>()
+            {
+                new Theme
+                {
+                    Title = "Программирование",
+                    Tests = new List<Test>()
+                    {
+                        new Test()
+                        {
+                            Name = "Базовые понятия C#",
+                            Description = "что-то здесь будет",
+                            Duration = 15,
+                            Questions = new List<Question>()
+                            {
+                                new Question()
+                                {
+                                    Text = "Выберите a2",
+                                    Answers = new List<Answer>()
+                                    {
+                                        new Answer() { Text = "a1", isCorrect = false },
+                                        new Answer() { Text = "a2", isCorrect = true },
+                                        new Answer() { Text = "a3", isCorrect = false },
+                                        new Answer() { Text = "a4", isCorrect = false }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             };
 
-            db.Answers.AddRange(answers);
+            /*db.Answers.AddRange(answers);
             db.Questions.AddRange(q1);
-            db.Tests.AddRange(t1);
+            db.Tests.AddRange(t1);*/
             db.Themes.AddRange(themes);
             db.SaveChanges();
             base.Seed(db);

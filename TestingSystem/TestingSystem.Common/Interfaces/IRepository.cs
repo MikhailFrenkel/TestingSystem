@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace TestingSystem.DataProvider.Interfaces
+namespace TestingSystem.Common.Interfaces
 {
     public interface IRepository<T> where T : class
     {

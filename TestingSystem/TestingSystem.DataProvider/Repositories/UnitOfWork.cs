@@ -1,6 +1,6 @@
 ﻿using System;
 using TestingSystem.DataProvider.DataContext;
-using TestingSystem.DataProvider.Interfaces;
+using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
 
 namespace TestingSystem.DataProvider.Repositories
@@ -11,6 +11,7 @@ namespace TestingSystem.DataProvider.Repositories
         private ThemeRepository _themeRepository;
         private TestRepository _testRepository;
         private QuestionRepository _questionRepository;
+        private AnswerRepository _answerRepository;
 
         public UnitOfWork()
         {
@@ -44,6 +45,16 @@ namespace TestingSystem.DataProvider.Repositories
                 if (_questionRepository == null)
                     _questionRepository = new QuestionRepository(db);
                 return _questionRepository;
+            }
+        }
+
+        public IRepository<Answer> Answers
+        {
+            get
+            {
+                if (_answerRepository == null)
+                    _answerRepository = new AnswerRepository(db);
+                return _answerRepository;
             }
         }
 
