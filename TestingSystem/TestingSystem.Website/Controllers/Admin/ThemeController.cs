@@ -1,89 +1,121 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TestingSystem.DataProvider.Repositories;
+using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
 
 namespace TestingSystem.Website.Controllers.Admin
 {
     public class ThemeController : Controller
     {
-        private UnitOfWork _unitOfWork;
+        private readonly IRepository<Theme> _themeRepository;
 
-        public ThemeController()
+        public ThemeController(IRepository<Theme> theme)
         {
-            _unitOfWork = new UnitOfWork();
+            _themeRepository = theme;
         }
 
         public ActionResult Index()
         {
-            return View(_unitOfWork.Themes.GetAll());
+            return View(_themeRepository.GetAll().ToList());
         }
 
-        [HttpGet]
-        public ActionResult CreateTheme()
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Theme theme = _themeRepository.GetById((int)id);
+            if (theme == null)
+            {
+                return HttpNotFound();
+            }
+            return View(theme);
+        }
+
+        public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult CreateTheme(Theme theme)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,Title")] Theme theme)
         {
-            _unitOfWork.Themes.Create(theme);
-            _unitOfWork.Save();
-            return RedirectToAction("Index");
-        }
+            if (ModelState.IsValid)
+            {
+                _themeRepository.Create(theme);
+                _themeRepository.Save();
+                return RedirectToAction("Index");
+            }
 
-        [HttpGet]
-        public ActionResult DeleteTheme(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Theme theme = _unitOfWork.Themes.GetById((int)id);
-            if (theme == null)
-            {
-                return HttpNotFound();
-            }
             return View(theme);
         }
 
-        [HttpPost, ActionName("DeleteTheme")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteThemeConfirmed(int id)
-        {
-            _unitOfWork.Themes.Delete(id);
-            _unitOfWork.Save();
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult EditTheme(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Theme theme = _unitOfWork.Themes.GetById((int)id);
+            Theme theme = _themeRepository.GetById((int)id);
             if (theme == null)
+            {
                 return HttpNotFound();
+            }
             return View(theme);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditTheme(Theme theme)
+        public ActionResult Edit([Bind(Include = "Id,Title")] Theme theme)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Themes.Update(theme);
-                _unitOfWork.Save();
+                _themeRepository.Update(theme);
+                _themeRepository.Save();
                 return RedirectToAction("Index");
             }
             return View(theme);
         }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Theme theme = _themeRepository.GetById((int)id);
+            if (theme == null)
+            {
+                return HttpNotFound();
+            }
+            return View(theme);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            _themeRepository.Delete(id);
+            _themeRepository.Save();
+            return RedirectToAction("Index");
+        }
+
+        /*protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _themeRepository.Dispose();
+            }
+            base.Dispose(disposing);
+        }*/
     }
 }

@@ -1,15 +1,14 @@
-﻿@using TestingSystem.Model
-@model TestingSystem.Model.Theme
+﻿@model TestingSystem.Model.Theme
+
 @{
-    ViewBag.Title = "EditTheme";
+    ViewBag.Title = "Edit Theme";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
         <h4>Theme</h4>
         <hr />
@@ -35,4 +34,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-

@@ -123,7 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Admin\AnswerController.cs" />
     <Compile Include="Controllers\Admin\QuestionController.cs" />
     <Compile Include="Controllers\Admin\TestController.cs" />
@@ -145,20 +144,27 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\CreateTheme.cshtml" />
-    <Content Include="Views\Admin\DeleteTheme.cshtml" />
-    <Content Include="Views\Admin\EditTheme.cshtml" />
-    <Content Include="Views\Admin\CreateTest.cshtml" />
-    <Content Include="Views\Theme\Index.cshtml" />
-    <Content Include="Views\Theme\CreateTheme.cshtml" />
-    <Content Include="Views\Theme\DeleteTheme.cshtml" />
-    <Content Include="Views\Theme\EditTheme.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Views\Test\CreateTest.cshtml" />
-    <Content Include="Views\Test\DeleteTest.cshtml" />
-    <Content Include="Views\Test\EditTest.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Theme\Create.cshtml" />
+    <Content Include="Views\Theme\Delete.cshtml" />
+    <Content Include="Views\Theme\Details.cshtml" />
+    <Content Include="Views\Theme\Edit.cshtml" />
+    <Content Include="Views\Theme\Index.cshtml" />
+    <Content Include="Views\Test\Create.cshtml" />
+    <Content Include="Views\Test\Delete.cshtml" />
+    <Content Include="Views\Test\Details.cshtml" />
+    <Content Include="Views\Test\Edit.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Question\Create.cshtml" />
+    <Content Include="Views\Question\Delete.cshtml" />
+    <Content Include="Views\Question\Details.cshtml" />
+    <Content Include="Views\Question\Edit.cshtml" />
+    <Content Include="Views\Question\Index.cshtml" />
+    <Content Include="Views\Answer\Create.cshtml" />
+    <Content Include="Views\Answer\Delete.cshtml" />
+    <Content Include="Views\Answer\Details.cshtml" />
+    <Content Include="Views\Answer\Edit.cshtml" />
+    <Content Include="Views\Answer\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -168,8 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Views\Answer\" />
-    <Folder Include="Views\Question\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestingSystem.Common\TestingSystem.Common.csproj">

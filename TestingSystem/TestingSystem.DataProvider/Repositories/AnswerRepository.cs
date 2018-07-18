@@ -45,5 +45,30 @@ namespace TestingSystem.DataProvider.Repositories
             if (item != null)
                 db.Answers.Remove(item);
         }
+
+        public void Save()
+        {
+            db.SaveChanges();
+        }
+
+        /*private bool disposed = false;
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }*/
     }
 }

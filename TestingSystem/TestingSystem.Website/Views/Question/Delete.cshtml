@@ -1,34 +1,36 @@
-﻿@model TestingSystem.Model.Theme
+﻿@model TestingSystem.Model.Question
+
 @{
-    ViewBag.Title = "DeleteTheme";
+    ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Delete</h2>
+
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Theme</h4>
+    <h4>Question</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Test.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Test.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Tests.Count)
+            @Html.DisplayNameFor(model => model.Text)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Tests.Count)
+            @Html.DisplayFor(model => model.Text)
         </dd>
 
     </dl>
 
-    @using (Html.BeginForm())
-    {
+    @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
@@ -37,4 +39,3 @@
         </div>
     }
 </div>
-

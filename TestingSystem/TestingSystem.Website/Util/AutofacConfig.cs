@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Autofac;
+﻿using Autofac;
 using TestingSystem.DataProvider.Repositories;
 using TestingSystem.Common.Interfaces;
 using System.Web.Mvc;
@@ -16,12 +14,13 @@ namespace TestingSystem.Website.Util
         public static void ConfigureContainer()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterControllers(typeof(HomeController).Assembly);
-            builder.RegisterType<AnswerRepository>().As<IRepository<Answer>>().WithParameter("context", new TestContext());
-            builder.RegisterType<QuestionRepository>().As<IRepository<Question>>().WithParameter("context", new TestContext());
-            builder.RegisterType<TestRepository>().As<IRepository<Test>>().WithParameter("context", new TestContext());
-            builder.RegisterType<ThemeRepository>().As<IRepository<Theme>>().WithParameter("context", new TestContext());
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterControllers(typeof(HomeController).Assembly).InstancePerRequest();
+            builder.RegisterType<TestContext>().InstancePerRequest();
+            builder.RegisterType<AnswerRepository>().As<IRepository<Answer>>().InstancePerRequest();
+            builder.RegisterType<QuestionRepository>().As<IRepository<Question>>().InstancePerRequest();
+            builder.RegisterType<TestRepository>().As<IRepository<Test>>().InstancePerRequest();
+            builder.RegisterType<ThemeRepository>().As<IRepository<Theme>>().InstancePerRequest();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

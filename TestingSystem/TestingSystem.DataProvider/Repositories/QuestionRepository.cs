@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TestingSystem.DataProvider.DataContext;
@@ -28,6 +29,11 @@ namespace TestingSystem.DataProvider.Repositories
                 db.Questions.Remove(item);
         }
 
+        public void Save()
+        {
+            db.SaveChanges();
+        }
+
         public IEnumerable<Question> GetAll()
         {
             return db.Questions.ToList();
@@ -42,5 +48,25 @@ namespace TestingSystem.DataProvider.Repositories
         {
             db.Entry(item).State = EntityState.Modified;
         }
+
+        /*private bool disposed = false;
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }*/
     }
 }

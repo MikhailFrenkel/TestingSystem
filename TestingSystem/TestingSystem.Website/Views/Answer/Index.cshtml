@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TestingSystem.Model.Test>
+﻿@model IEnumerable<TestingSystem.Model.Answer>
 
 @{
     ViewBag.Title = "Index";
@@ -13,16 +13,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Theme.Title)
+            @Html.DisplayNameFor(model => model.Question.Text)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Text)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Duration)
+            @Html.DisplayNameFor(model => model.isCorrect)
         </th>
         <th></th>
     </tr>
@@ -30,16 +27,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Theme.Title)
+            @Html.DisplayFor(modelItem => item.Question.Text)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.Text)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Duration)
+            @Html.DisplayFor(modelItem => item.isCorrect)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
