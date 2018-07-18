@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using TestingSystem.Common.Interfaces;
-using TestingSystem.DataProvider.DataContext;
 using TestingSystem.Model;
 
 namespace TestingSystem.Website.Controllers.Admin
@@ -23,37 +17,25 @@ namespace TestingSystem.Website.Controllers.Admin
             _answerRepository = answer;
         }
 
-        // GET: Answer
-        public ActionResult Index()
+        public ActionResult Index(int? questionId)
         {
+            if (questionId != null)
+            {
+                Question question = _questionRepository.GetById((int)questionId);
+                if (question != null)
+                {
+                    return View(question.Answers);
+                }
+            }
             return View(_answerRepository.GetAll().ToList());
         }
 
-        // GET: Answer/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Answer answer = _answerRepository.GetById((int)id);
-            if (answer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(answer);
-        }
-
-        // GET: Answer/Create
         public ActionResult Create()
         {
             ViewBag.QuestionId = new SelectList(_questionRepository.GetAll().ToList(), "Id", "Text");
             return View();
         }
 
-        // POST: Answer/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Text,isCorrect,QuestionId")] Answer answer)
@@ -69,7 +51,6 @@ namespace TestingSystem.Website.Controllers.Admin
             return View(answer);
         }
 
-        // GET: Answer/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,9 +66,6 @@ namespace TestingSystem.Website.Controllers.Admin
             return View(answer);
         }
 
-        // POST: Answer/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Text,isCorrect,QuestionId")] Answer answer)
@@ -102,7 +80,6 @@ namespace TestingSystem.Website.Controllers.Admin
             return View(answer);
         }
 
-        // GET: Answer/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -117,7 +94,6 @@ namespace TestingSystem.Website.Controllers.Admin
             return View(answer);
         }
 
-        // POST: Answer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -126,14 +102,5 @@ namespace TestingSystem.Website.Controllers.Admin
             _answerRepository.Save();
             return RedirectToAction("Index");
         }
-
-        /*protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }*/
     }
 }

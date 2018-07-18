@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TestingSystem.DataProvider.DataContext;
@@ -26,7 +25,10 @@ namespace TestingSystem.DataProvider.Repositories
         {
             Question item = db.Questions.Find(id);
             if (item != null)
+            {
+                item.Answers.ToList();
                 db.Questions.Remove(item);
+            }
         }
 
         public void Save()
@@ -49,24 +51,5 @@ namespace TestingSystem.DataProvider.Repositories
             db.Entry(item).State = EntityState.Modified;
         }
 
-        /*private bool disposed = false;
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }*/
     }
 }

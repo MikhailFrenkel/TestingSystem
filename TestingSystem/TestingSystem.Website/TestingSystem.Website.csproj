@@ -147,24 +147,22 @@
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Theme\Create.cshtml" />
     <Content Include="Views\Theme\Delete.cshtml" />
-    <Content Include="Views\Theme\Details.cshtml" />
     <Content Include="Views\Theme\Edit.cshtml" />
     <Content Include="Views\Theme\Index.cshtml" />
     <Content Include="Views\Test\Create.cshtml" />
     <Content Include="Views\Test\Delete.cshtml" />
-    <Content Include="Views\Test\Details.cshtml" />
     <Content Include="Views\Test\Edit.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Question\Create.cshtml" />
     <Content Include="Views\Question\Delete.cshtml" />
-    <Content Include="Views\Question\Details.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\Answer\Create.cshtml" />
     <Content Include="Views\Answer\Delete.cshtml" />
-    <Content Include="Views\Answer\Details.cshtml" />
     <Content Include="Views\Answer\Edit.cshtml" />
     <Content Include="Views\Answer\Index.cshtml" />
+    <Content Include="Views\Error\BadRequest.cshtml" />
+    <Content Include="Views\Partial\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

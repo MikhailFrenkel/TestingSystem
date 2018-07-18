@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using TestingSystem.Common.Interfaces;
-using TestingSystem.DataProvider.DataContext;
 using TestingSystem.Model;
 
 namespace TestingSystem.Website.Controllers.Admin
@@ -23,23 +17,18 @@ namespace TestingSystem.Website.Controllers.Admin
             _testRepository = test;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? themeId)
         {
+            if (themeId != null)
+            {
+                Theme theme = _themeRepository.GetById((int)themeId);
+                if (theme != null)
+                {
+                    return View(theme.Tests);
+                }
+            }
             return View(_testRepository.GetAll().ToList());
-        }
-
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Test test = _testRepository.GetById((int)id);
-            if (test == null)
-            {
-                return HttpNotFound();
-            }
-            return View(test);
+            
         }
 
         public ActionResult Create()
@@ -114,14 +103,5 @@ namespace TestingSystem.Website.Controllers.Admin
             _testRepository.Save();
             return RedirectToAction("Index");
         }
-
-        /*protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _testRepository.Dispose();
-            }
-            base.Dispose(disposing);
-        }*/
     }
 }

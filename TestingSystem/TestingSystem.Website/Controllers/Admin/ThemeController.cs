@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
@@ -23,21 +18,6 @@ namespace TestingSystem.Website.Controllers.Admin
         public ActionResult Index()
         {
             return View(_themeRepository.GetAll().ToList());
-        }
-
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Theme theme = _themeRepository.GetById((int)id);
-            if (theme == null)
-            {
-                return HttpNotFound();
-            }
-            return View(theme);
         }
 
         public ActionResult Create()
@@ -108,14 +88,5 @@ namespace TestingSystem.Website.Controllers.Admin
             _themeRepository.Save();
             return RedirectToAction("Index");
         }
-
-        /*protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _themeRepository.Dispose();
-            }
-            base.Dispose(disposing);
-        }*/
     }
 }

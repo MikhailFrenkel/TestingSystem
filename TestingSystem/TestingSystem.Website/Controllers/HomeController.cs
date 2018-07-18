@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using TestingSystem.Common.Interfaces;
-using TestingSystem.DataProvider.Repositories;
 using TestingSystem.Model;
 
 namespace TestingSystem.Website.Controllers

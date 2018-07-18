@@ -9,5 +9,11 @@ namespace TestingSystem.Website.Controllers
             Response.StatusCode = 404;
             return View();
         }
+
+        public ActionResult BadRequest()
+        {
+            Response.StatusCode = 400;
+            return View();
+        }
     }
 }

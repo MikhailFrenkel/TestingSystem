@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using TestingSystem.Common.Interfaces;
-using TestingSystem.DataProvider.DataContext;
 using TestingSystem.Model;
 
 namespace TestingSystem.Website.Controllers.Admin
@@ -23,24 +17,17 @@ namespace TestingSystem.Website.Controllers.Admin
             _questionRepository = question;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? testId)
         {
+            if (testId != null)
+            {
+                Test test = _testRepository.GetById((int)testId);
+                if (test != null)
+                {
+                    return View(test.Questions);
+                }
+            }
             return View(_questionRepository.GetAll().ToList());
-        }
-
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Question question = _questionRepository.GetById((int)id);
-            if (question == null)
-            {
-                return HttpNotFound();
-            }
-            return View(question);
         }
 
         public ActionResult Create()
@@ -115,14 +102,5 @@ namespace TestingSystem.Website.Controllers.Admin
             _questionRepository.Save();
             return RedirectToAction("Index");
         }
-
-        /*protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }*/
     }
 }
