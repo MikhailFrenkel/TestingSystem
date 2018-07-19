@@ -1,26 +1,37 @@
-﻿@model IEnumerable<TestingSystem.Model.Question>
+﻿@model PagedList.IPagedList<TestingSystem.Model.Question>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Questions";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@Html.Partial("~/Views/Partial/View.cshtml")
 <h2>Questions</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+<form method="get">
+    <div class="form-inline">
+        <label class="control-label">Test: </label>
+        @Html.DropDownList("TestId", null, htmlAttributes: new { @class = "form-control" })
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+</form>
+<br />
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Test.Name)
+            Test
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Text)
+            Text
         </th>
         <th>
-            Count answers
+            Answers
         </th>
         <th></th>
     </tr>
@@ -39,10 +50,15 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Edit answers", "Index", "Answer") |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
 
 </table>
+<br />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { testId = ViewBag.id, page }))
+

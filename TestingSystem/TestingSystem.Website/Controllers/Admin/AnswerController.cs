@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using PagedList;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
 
@@ -8,26 +10,34 @@ namespace TestingSystem.Website.Controllers.Admin
 {
     public class AnswerController : Controller
     {
+        private readonly IRepository<Test> _testRepository;
         private readonly IRepository<Question> _questionRepository;
         private readonly IRepository<Answer> _answerRepository;
 
-        public AnswerController(IRepository<Question> question, IRepository<Answer> answer)
+        public AnswerController(IRepository<Test> test, IRepository<Question> question, IRepository<Answer> answer)
         {
+            _testRepository = test;
             _questionRepository = question;
             _answerRepository = answer;
         }
 
-        public ActionResult Index(int? questionId)
+        public ActionResult Index(int? testId, int? page)
         {
-            if (questionId != null)
+            int pageSize = 3;
+            int pageNumber = page ?? 1;
+            List<Test> tests = new List<Test>() { new Test { Id = 0, Name = "All" } };
+            tests.AddRange(_testRepository.GetAll().OrderBy(x => x.Name).ToList());
+            ViewBag.TestId = new SelectList(tests, "Id", "Name");
+            ViewBag.id = testId;
+            if (testId != null && testId != 0)
             {
-                Question question = _questionRepository.GetById((int)questionId);
-                if (question != null)
+                Test test = _testRepository.GetById((int)testId);
+                if (test != null)
                 {
-                    return View(question.Answers);
+                    return View(_answerRepository.GetAll().Where(x => x.Question.TestId == testId).ToPagedList(pageNumber, pageSize));
                 }
             }
-            return View(_answerRepository.GetAll().ToList());
+            return View(_answerRepository.GetAll().ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Create()

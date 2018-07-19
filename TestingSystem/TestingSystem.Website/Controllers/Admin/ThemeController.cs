@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using PagedList;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
 
@@ -15,9 +18,22 @@ namespace TestingSystem.Website.Controllers.Admin
             _themeRepository = theme;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string searchString, int? page)
         {
-            return View(_themeRepository.GetAll().ToList());
+            int pageSize = 3;
+            int pageNumber = page ?? 1;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.Trim();
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    List<Theme> themes = _themeRepository.GetAll()
+                        .Where(x => x.Title.Contains(searchString))
+                        .OrderBy(x => x.Title).ToList();
+                    return View(themes.ToPagedList(pageNumber, pageSize));
+                }
+            }
+            return View(_themeRepository.GetAll().OrderBy(x => x.Title).ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Create()

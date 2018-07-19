@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using PagedList;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
 
@@ -17,18 +19,23 @@ namespace TestingSystem.Website.Controllers.Admin
             _testRepository = test;
         }
 
-        public ActionResult Index(int? themeId)
+        public ActionResult Index(int? themeId, int? page)
         {
-            if (themeId != null)
+            int pageSize = 3;
+            int pageNumber = page ?? 1;
+            List<Theme> themes = new List<Theme>() {new Theme {Id = 0, Title = "All"} };
+            themes.AddRange(_themeRepository.GetAll().OrderBy(x => x.Title).ToList());
+            ViewBag.ThemeId = new SelectList(themes, "Id", "Title");
+            ViewBag.id = themeId;
+            if (themeId != null && themeId != 0)
             {
                 Theme theme = _themeRepository.GetById((int)themeId);
                 if (theme != null)
                 {
-                    return View(theme.Tests);
+                    return View(theme.Tests.OrderBy(x => x.Theme.Title).ToPagedList(pageNumber, pageSize));
                 }
             }
-            return View(_testRepository.GetAll().ToList());
-            
+            return View(_testRepository.GetAll().OrderBy(x => x.Theme.Title).ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Create()

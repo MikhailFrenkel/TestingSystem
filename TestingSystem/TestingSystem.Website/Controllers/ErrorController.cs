@@ -7,13 +7,15 @@ namespace TestingSystem.Website.Controllers
         public ActionResult NotFound()
         {
             Response.StatusCode = 404;
-            return View();
+            ViewBag.Message = "Error 404. Page not found";
+            return View("~/Views/Error/Error.cshtml");
         }
 
         public ActionResult BadRequest()
         {
             Response.StatusCode = 400;
-            return View();
+            ViewBag.Message = "Error 400. BadRequest";
+            return View("~/Views/Error/Error.cshtml");
         }
     }
 }

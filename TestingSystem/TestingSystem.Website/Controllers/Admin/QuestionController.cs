@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using PagedList;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
 
@@ -17,17 +19,24 @@ namespace TestingSystem.Website.Controllers.Admin
             _questionRepository = question;
         }
 
-        public ActionResult Index(int? testId)
+        public ActionResult Index(int? testId, int? page)
         {
-            if (testId != null)
+            int pageSize = 3;
+            int pageNumber = page ?? 1;
+            List<Test> tests = new List<Test>() { new Test { Id = 0, Name = "All"} };
+            tests.AddRange(_testRepository.GetAll().OrderBy(x => x.Name).ToList());
+            ViewBag.TestId = new SelectList(tests, "Id", "Name");
+            ViewBag.id = testId;
+            if (testId != null && testId != 0)
             {
                 Test test = _testRepository.GetById((int)testId);
                 if (test != null)
                 {
-                    return View(test.Questions);
+                    return View(test.Questions.OrderBy(x => x.Test.Name).ToPagedList(pageNumber, pageSize));
                 }
             }
-            return View(_questionRepository.GetAll().ToList());
+
+            return View(_questionRepository.GetAll().OrderBy(x => x.Test.Name).ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Create()
