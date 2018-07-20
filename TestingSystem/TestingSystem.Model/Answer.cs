@@ -1,8 +1,11 @@
-﻿namespace TestingSystem.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TestingSystem.Model
 {
     public class Answer
     {
         public int Id { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Text { get; set; }
         public bool isCorrect { get; set; }
 

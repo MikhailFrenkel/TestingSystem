@@ -21,7 +21,7 @@ namespace TestingSystem.Website.Controllers.Admin
 
         public ActionResult Index(int? themeId, int? page)
         {
-            int pageSize = 3;
+            int pageSize = 8;
             int pageNumber = page ?? 1;
             List<Theme> themes = new List<Theme>() {new Theme {Id = 0, Title = "All"} };
             themes.AddRange(_themeRepository.GetAll().OrderBy(x => x.Title).ToList());

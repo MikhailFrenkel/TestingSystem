@@ -20,7 +20,7 @@ namespace TestingSystem.Website.Controllers.Admin
 
         public ActionResult Index(string searchString, int? page)
         {
-            int pageSize = 3;
+            int pageSize = 8;
             int pageNumber = page ?? 1;
             if (!String.IsNullOrEmpty(searchString))
             {

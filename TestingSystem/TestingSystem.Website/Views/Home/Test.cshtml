@@ -1,31 +1,17 @@
-﻿@model IEnumerable<TestingSystem.Model.Theme>
+﻿@model TestingSystem.Model.Test
 @{
     ViewBag.Title = "Test";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<ul>
-    @foreach (var theme in Model)
-    {
 
-        <li>@theme.Title</li>
-        <ul>
-            @foreach (var test in theme.Tests)
-             {
-                 <li>@test.Name</li>
-                 <ul>
-                    @foreach (var question in test.Questions)
-                    {
-                        <li>@question.Text</li>
-                        <ul>
-                            @foreach (var answer in question.Answers)
-                            {
-                                <li>@answer.Text - @answer.isCorrect</li>
-                            }
-                        </ul>
-                    }
-                 </ul>   
-             }
-         </ul>
-    }
-</ul>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h3>@Model.Name</h3>
+        <span>@Model.Description<br /><br />
+            Count of questions - @Model.Questions.Count<br />
+            Time - @Model.Duration<br />
+        </span>
+        @Html.ActionLink("Start", "StartTest", new { id = Model.Id }, new { @class = "btn btn-default" })
+    </div>
+</div>
 

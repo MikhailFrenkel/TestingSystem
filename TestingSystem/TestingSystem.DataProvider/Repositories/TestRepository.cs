@@ -26,7 +26,11 @@ namespace TestingSystem.DataProvider.Repositories
             Test item = db.Tests.Find(id);
             if (item != null)
             {
-                item.Questions.ToList();
+                foreach (var question in item.Questions)
+                {
+                    question.Test = null;
+                    question.TestId = null;
+                }
                 db.Tests.Remove(item);
             }
         }

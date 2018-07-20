@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Net;
+using System.Web.Mvc;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
 
@@ -22,12 +24,31 @@ namespace TestingSystem.Website.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(_themeRepository.GetAll().ToList());
         }
 
-        public ActionResult Test()
+        public ActionResult Test(int? id)
         {
-            return View(_themeRepository.GetAll());
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Test test = _testRepository.GetById((int)id);
+            if (test == null)
+                return HttpNotFound();
+            return View(test);
+        }
+
+        public ActionResult StartTest(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Test test = _testRepository.GetById((int)id);
+            if (test == null)
+                return HttpNotFound();
+            return View(test);
         }
     }
 }

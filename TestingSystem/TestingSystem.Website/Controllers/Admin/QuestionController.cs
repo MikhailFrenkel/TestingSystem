@@ -21,7 +21,7 @@ namespace TestingSystem.Website.Controllers.Admin
 
         public ActionResult Index(int? testId, int? page)
         {
-            int pageSize = 3;
+            int pageSize = 8;
             int pageNumber = page ?? 1;
             List<Test> tests = new List<Test>() { new Test { Id = 0, Name = "All"} };
             tests.AddRange(_testRepository.GetAll().OrderBy(x => x.Name).ToList());

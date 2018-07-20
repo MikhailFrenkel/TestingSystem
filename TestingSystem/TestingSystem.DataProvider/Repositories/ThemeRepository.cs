@@ -26,7 +26,11 @@ namespace TestingSystem.DataProvider.Repositories
             Theme item = db.Themes.Find(id);
             if (item != null)
             {
-                item.Tests.ToList(); //?
+                foreach(var test in item.Tests)
+                {
+                    test.Theme = null;
+                    test.ThemeId = null;
+                }
                 db.Themes.Remove(item);
             }
         }

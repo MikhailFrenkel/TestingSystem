@@ -1,7 +1,35 @@
-﻿
+﻿@model List<TestingSystem.Model.Theme>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Main page";
 }
 
-<h2>Hello</h2>
+
+<div class="container">
+    @{
+        for (int i = 0; i < Model.Count; i += 2)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <ul><h4>@Model[i].Title</h4>
+                        @foreach (var test in Model[i].Tests)
+                        {
+                            <li>@Html.ActionLink(test.Name, "Test", new { id = test.Id })</li>
+                        }
+                    </ul>
+                </div>
+                @if (i < Model.Count - 1)
+                {
+                    <div class="col-md-6">
+                        <ul><h4>@Model[i + 1].Title</h4>
+                            @foreach (var test in Model[i + 1].Tests)
+                            {
+                                <li>@Html.ActionLink(test.Name, "Test", new { id = test.Id })</li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>   
+        }
+    }
+</div>
