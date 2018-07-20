@@ -1,31 +1,39 @@
-﻿@model TestingSystem.Model.Test
+﻿@model TestingSystem.Model.ViewModel.TestViewModel
 @{
     ViewBag.Title = "StartTest";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form action="" method="post">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.Name)
+
     <h2>@Model.Name</h2>
-    @foreach (var question in Model.Questions)
+    for (int i = 0; i < Model.Questions.Count; i++)
     {
-        <ul>@question.Text
-            @foreach (var answer in question.Answers)
+        @Html.HiddenFor(model => model.Questions[i].Id)
+        @Html.HiddenFor(model => model.Questions[i].Text)
+        <ol>
+            @Html.DisplayFor(model => model.Questions[i].Text)
+            @for (int j = 0; j < Model.Questions[i].Answers.Count; j++)
             {
-                if (question.CorrectAnswer > 1)
+                if (Model.Questions[i].CorrectAnswers.Count > 1)
                 {
-                    <li><input type="checkbox" name="@question.Id" value="@answer.Text" />@answer.Text</li>
+                    <li><input type="checkbox" name="Questions[@i].Answers[@j].Id" value="@Model.Questions[i].Answers[j].Id" />@Model.Questions[i].Answers[j].Text</li>
                 }
                 else
                 {
-                    <li><input type="radio" name="@question.Id" value="@answer.Text" />@answer.Text</li>
+                    <li><input type="radio" name="Questions[@i].Answers[@j].Id" value="@Model.Questions[i].Answers[j].Id" />@Model.Questions[i].Answers[j].Text</li>
                 }
             }
-        </ul>
+        </ol>
     }
     <div class="form-group">
         <div class="col-md-10">
             <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>
-</form>
+}
 

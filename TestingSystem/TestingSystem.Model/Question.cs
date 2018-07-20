@@ -8,18 +8,24 @@ namespace TestingSystem.Model
         public int Id { get; set; }
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }
-        public virtual ICollection<Answer> Answers { get; set; }
+        public virtual List<Answer> Answers { get; set; }
         public int CorrectAnswer
         {
             get
             {
-                int res = 0;
-                foreach (var answer in Answers)
+                if (Answers != null)
                 {
-                    if (answer.isCorrect)
-                        res++;
+                    int res = 0;
+                    foreach (var answer in Answers)
+                    {
+                        if (answer.isCorrect)
+                            res++;
+                    }
+
+                    return res;
                 }
-                return res;
+
+                return 0;
             }
         }
 

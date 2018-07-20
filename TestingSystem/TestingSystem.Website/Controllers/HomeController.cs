@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
+using TestingSystem.Model.ViewModel;
 
 namespace TestingSystem.Website.Controllers
 {
@@ -48,7 +50,15 @@ namespace TestingSystem.Website.Controllers
             Test test = _testRepository.GetById((int)id);
             if (test == null)
                 return HttpNotFound();
-            return View(test);
+            TestViewModel tvm = new TestViewModel(test);
+            return View(tvm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StartTest(Test test)
+        {
+            return View();
         }
     }
 }
