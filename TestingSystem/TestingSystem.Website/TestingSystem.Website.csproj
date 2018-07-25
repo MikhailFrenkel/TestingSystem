@@ -171,6 +171,7 @@
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\StartTest.cshtml" />
+    <Content Include="Views\Home\Result.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -189,6 +190,10 @@
     <ProjectReference Include="..\TestingSystem.DataProvider\TestingSystem.DataProvider.csproj">
       <Project>{e58f9381-3207-4181-8eaf-8e9ad17f9479}</Project>
       <Name>TestingSystem.DataProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestingSystem.Logic\TestingSystem.Logic.csproj">
+      <Project>{44bf2860-9a2c-4ffc-b720-8efd0b7afa73}</Project>
+      <Name>TestingSystem.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestingSystem.Model\TestingSystem.Model.csproj">
       <Project>{24133FD6-6348-4716-8009-03E378A46263}</Project>

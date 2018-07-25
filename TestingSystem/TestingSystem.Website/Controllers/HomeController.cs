@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
 using TestingSystem.Model.ViewModel;
+using TestingSystem.Logic;
 
 namespace TestingSystem.Website.Controllers
 {
@@ -61,10 +62,16 @@ namespace TestingSystem.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                ResultViewModel result = CheckTest.Check(_testRepository.GetById(tvm.Id), tvm);
+                return RedirectToAction("Result", result);
             }
             tvm = new TestViewModel(_testRepository.GetById(tvm.Id));
             return View(tvm);
+        }
+
+        public ActionResult Result(ResultViewModel result)
+        {
+            return View(result);
         }
     }
 }

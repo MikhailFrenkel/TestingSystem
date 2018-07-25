@@ -1,0 +1,10 @@
+﻿@model TestingSystem.Model.ViewModel.ResultViewModel
+@{
+    ViewBag.Title = $"Result {Model.TestName}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.TestName</h2>
+
+<span>Вы ответили на @Model.CountCorrectQuestion из @Model.CountQuestions вопросов</span>
+
