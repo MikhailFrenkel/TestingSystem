@@ -10,7 +10,11 @@ namespace TestingSystem.Model.ViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual List<QuestionViewModel> Questions { get; set; }
+        public IList<QuestionViewModel> Questions { get; set; }
+
+        public TestViewModel()
+        {
+        }
 
         public TestViewModel(Test test)
         {

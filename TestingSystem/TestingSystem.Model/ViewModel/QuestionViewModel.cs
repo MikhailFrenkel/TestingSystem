@@ -11,9 +11,13 @@ namespace TestingSystem.Model.ViewModel
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        [Required]
-        public List<int> CorrectAnswers { get; set; }
-        public virtual List<AnswerViewModel> Answers { get; set; }
+        [Required(ErrorMessage = "Ответьте на вопрос")]
+        public IList<int> CorrectAnswers { get; set; }
+        public IList<AnswerViewModel> Answers { get; set; }
+
+        public QuestionViewModel()
+        {
+        }
 
         public QuestionViewModel(Question question)
         {

@@ -11,6 +11,10 @@ namespace TestingSystem.Model.ViewModel
         public int Id { get; set; }
         public string Text { get; set; }
 
+        public AnswerViewModel()
+        {
+        }
+
         public AnswerViewModel(Answer answer)
         {
             Id = answer.Id;

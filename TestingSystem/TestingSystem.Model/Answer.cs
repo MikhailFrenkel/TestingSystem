@@ -6,6 +6,7 @@ namespace TestingSystem.Model
     {
         public int Id { get; set; }
         [DataType(DataType.MultilineText)]
+        [Required]
         public string Text { get; set; }
         public bool isCorrect { get; set; }
 

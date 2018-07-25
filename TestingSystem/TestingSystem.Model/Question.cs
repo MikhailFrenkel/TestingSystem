@@ -9,6 +9,7 @@ namespace TestingSystem.Model
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }
         public virtual List<Answer> Answers { get; set; }
+
         public int CorrectAnswer
         {
             get

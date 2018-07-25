@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -56,9 +57,14 @@ namespace TestingSystem.Website.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StartTest(Test test)
+        public ActionResult StartTest(TestViewModel tvm)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+
+            }
+            tvm = new TestViewModel(_testRepository.GetById(tvm.Id));
+            return View(tvm);
         }
     }
 }
