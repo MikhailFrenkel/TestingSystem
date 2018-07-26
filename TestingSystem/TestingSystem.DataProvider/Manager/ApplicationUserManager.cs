@@ -23,6 +23,16 @@ namespace TestingSystem.DataProvider.Manager
         {
             ApplicationContext db = context.Get<ApplicationContext>();
             ApplicationUserManager manager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
+
+            manager.PasswordValidator = new PasswordValidator
+            {
+                RequiredLength = 6,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = true,
+                RequireLowercase = true,
+                RequireUppercase = true
+            };
+
             return manager;
         }
     }
