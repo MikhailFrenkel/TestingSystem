@@ -33,6 +33,12 @@ namespace TestingSystem.DataProvider.Manager
                 RequireUppercase = true
             };
 
+            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
+            {
+                AllowOnlyAlphanumericUserNames = true,
+                RequireUniqueEmail = true
+            };
+
             return manager;
         }
     }
