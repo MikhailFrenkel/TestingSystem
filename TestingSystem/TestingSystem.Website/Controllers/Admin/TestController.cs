@@ -8,6 +8,7 @@ using TestingSystem.Model;
 
 namespace TestingSystem.Website.Controllers.Admin
 {
+    [Authorize(Roles = "admin")]
     public class TestController : Controller
     {
         private readonly IRepository<Theme> _themeRepository;

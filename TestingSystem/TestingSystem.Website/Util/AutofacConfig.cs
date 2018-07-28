@@ -15,7 +15,7 @@ namespace TestingSystem.Website.Util
         {
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(HomeController).Assembly).InstancePerRequest();
-            builder.RegisterType<TestContext>().InstancePerRequest();
+            builder.RegisterType<ApplicationDbContext>().InstancePerRequest();
             builder.RegisterType<AnswerRepository>().As<IRepository<Answer>>().InstancePerRequest();
             builder.RegisterType<QuestionRepository>().As<IRepository<Question>>().InstancePerRequest();
             builder.RegisterType<TestRepository>().As<IRepository<Test>>().InstancePerRequest();

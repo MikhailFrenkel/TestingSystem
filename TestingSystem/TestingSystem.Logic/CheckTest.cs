@@ -18,9 +18,9 @@ namespace TestingSystem.Logic
             for (int i = 0; i < test.Questions.Count; i++)
             {
                 int temp = 0;
-                foreach (int id in tvm.Questions[i].CorrectAnswers)
+                foreach (var id in tvm.Questions[i].CorrectAnswers)
                 {
-                    if (test.Questions[i].Answers?.Where(x => x.isCorrect).FirstOrDefault()?.Id == id)
+                    if (test.Questions[i].Answers.FirstOrDefault(x => x.Id == id && x.isCorrect) != null)
                     {
                         temp++;
                     }

@@ -43,7 +43,7 @@ namespace TestingSystem.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = await UserManager.FindAsync(lvm.Email, lvm.Password);
+                ApplicationUser user = await UserManager.FindAsync(lvm.Login, lvm.Password);
                 if (user == null)
                 {
                     ModelState.AddModelError("", "Неверный логин или пароль");
@@ -74,7 +74,7 @@ namespace TestingSystem.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser {UserName = rvm.Email, Email = rvm.Email};
+                ApplicationUser user = new ApplicationUser {UserName = rvm.Login, Email = rvm.Email };
                 IdentityResult result = await UserManager.CreateAsync(user, rvm.Password);
                 if (result.Succeeded)
                 {
@@ -90,6 +90,14 @@ namespace TestingSystem.Website.Controllers
             }
 
             return View(rvm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

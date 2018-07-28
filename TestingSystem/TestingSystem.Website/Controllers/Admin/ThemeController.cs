@@ -9,6 +9,7 @@ using TestingSystem.Model;
 
 namespace TestingSystem.Website.Controllers.Admin
 {
+    [Authorize(Roles = "admin")]
     public class ThemeController : Controller
     {
         private readonly IRepository<Theme> _themeRepository;

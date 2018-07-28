@@ -137,9 +137,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\TestingSystemStore.mdf" />
-    <Content Include="App_Data\TestingSystemStore_log.ldf">
-      <DependentUpon>TestingSystemStore.mdf</DependentUpon>
+    <Content Include="App_Data\LocalStore.mdf" />
+    <Content Include="App_Data\LocalStore_log.ldf">
+      <DependentUpon>LocalStore.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -167,6 +167,7 @@
     <Compile Include="Controllers\Admin\ThemeController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -199,13 +200,13 @@
     <Content Include="Views\Answer\Edit.cshtml" />
     <Content Include="Views\Answer\Index.cshtml" />
     <Content Include="Views\Partial\View.cshtml" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\StartTest.cshtml" />
     <Content Include="Views\Home\Result.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Partial\_LoginPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -215,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Views\Manage\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestingSystem.Common\TestingSystem.Common.csproj">

@@ -10,6 +10,8 @@ namespace TestingSystem.Model.ViewModel
     public class RegisterViewModel
     {
         [Required]
+        public string Login { get; set; }
+
         public string Email { get; set; }
 
         [Required]

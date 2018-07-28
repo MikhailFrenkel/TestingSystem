@@ -21,22 +21,22 @@ namespace TestingSystem.DataProvider.Manager
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
                                                         IOwinContext context)
         {
-            ApplicationContext db = context.Get<ApplicationContext>();
+            ApplicationDbContext db = context.Get<ApplicationDbContext>();
             ApplicationUserManager manager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
 
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
+                RequiredLength = 4,
                 RequireNonLetterOrDigit = false,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false
             };
 
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
-                AllowOnlyAlphanumericUserNames = true,
-                RequireUniqueEmail = true
+                AllowOnlyAlphanumericUserNames = false,
+                RequireUniqueEmail = false
             };
 
             return manager;

@@ -9,19 +9,19 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity;
 using TestingSystem.DataProvider.Manager;
 
-[assembly: OwinStartup(typeof(TestingSystem.Website.App_Start.Startup))]
-namespace TestingSystem.Website.App_Start
+[assembly: OwinStartup(typeof(TestingSystem.Website.Startup))]
+namespace TestingSystem.Website
 {
     public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
-            app.CreatePerOwinContext<ApplicationContext>(ApplicationContext.Create);
+            app.CreatePerOwinContext<ApplicationDbContext>(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("~/Controllers/Account/Login")
+                LoginPath = new PathString("/Account/Login")
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TestingSystem.DataProvider.DataContext;
@@ -9,9 +10,9 @@ namespace TestingSystem.DataProvider.Repositories
 {
     public class AnswerRepository : IRepository<Answer>
     {
-        private TestContext db;
+        private ApplicationDbContext db;
 
-        public AnswerRepository(TestContext context)
+        public AnswerRepository(ApplicationDbContext context)
         {
             db = context;
         }

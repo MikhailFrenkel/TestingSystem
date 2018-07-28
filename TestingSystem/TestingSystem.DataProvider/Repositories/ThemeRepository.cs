@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TestingSystem.DataProvider.DataContext;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
@@ -9,9 +10,9 @@ namespace TestingSystem.DataProvider.Repositories
 {
     public class ThemeRepository : IRepository<Theme>
     {
-        private TestContext db;
+        private ApplicationDbContext db;
 
-        public ThemeRepository(TestContext context)
+        public ThemeRepository(ApplicationDbContext context)
         {
             db = context;
         }

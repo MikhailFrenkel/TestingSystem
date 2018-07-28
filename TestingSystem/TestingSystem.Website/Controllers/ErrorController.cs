@@ -2,6 +2,7 @@
 
 namespace TestingSystem.Website.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ErrorController : Controller
     {
         public ActionResult NotFound()

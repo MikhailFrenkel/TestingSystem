@@ -7,7 +7,7 @@ namespace TestingSystem.DataProvider.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private TestContext db;
+        private ApplicationDbContext db;
         private ThemeRepository _themeRepository;
         private TestRepository _testRepository;
         private QuestionRepository _questionRepository;
@@ -15,7 +15,7 @@ namespace TestingSystem.DataProvider.Repositories
 
         public UnitOfWork()
         {
-            db = new TestContext();
+            db = new ApplicationDbContext();
         }
 
         public IRepository<Theme> Themes

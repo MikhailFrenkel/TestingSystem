@@ -91,7 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext\TestContext.cs" />
+    <Compile Include="DataContext\ApplicationDbContext.cs" />
     <Compile Include="DataContext\TestInitializer.cs" />
     <Compile Include="Manager\ApplicationUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

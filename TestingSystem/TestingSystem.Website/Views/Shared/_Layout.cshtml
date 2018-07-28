@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -21,7 +22,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("Theme", "Index", "Theme")</li>
+                        <li>@Html.ActionLink("Test", "Index", "Test")</li>
+                        <li>@Html.ActionLink("Question", "Index", "Question")</li>
+                        <li>@Html.ActionLink("Answer", "Index", "Answer")</li>
+                    }
                 </ul>
+                @Html.Partial("~/Views/Partial/_LoginPartial.cshtml")
             </div>
         </div>
     </div>

@@ -43,6 +43,7 @@ namespace TestingSystem.Website.Controllers
             return View(test);
         }
 
+        [Authorize(Roles = "user")]
         public ActionResult StartTest(int? id)
         {
             if (id == null)
@@ -58,6 +59,7 @@ namespace TestingSystem.Website.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "user")]
         public ActionResult StartTest(TestViewModel tvm)
         {
             if (ModelState.IsValid)
@@ -69,8 +71,14 @@ namespace TestingSystem.Website.Controllers
             return View(tvm);
         }
 
+        [Authorize(Roles = "user")]
         public ActionResult Result(ResultViewModel result)
         {
+            if (result == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             return View(result);
         }
     }
