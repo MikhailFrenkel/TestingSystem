@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using PagedList;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.Model;
@@ -22,7 +23,7 @@ namespace TestingSystem.Website.Controllers.Admin
 
         public ActionResult Index(int? testId, int? page)
         {
-            int pageSize = 8;
+            int pageSize = 4;
             int pageNumber = page ?? 1;
             List<Test> tests = new List<Test>() { new Test { Id = 0, Name = "All"} };
             tests.AddRange(_testRepository.GetAll().OrderBy(x => x.Name).ToList());
@@ -111,6 +112,12 @@ namespace TestingSystem.Website.Controllers.Admin
             _questionRepository.Delete(id);
             _questionRepository.Save();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Select(int id)
+        {
+            List<Answer> answers = _questionRepository.GetById(id).Answers.ToList();
+            return PartialView(answers);
         }
     }
 }

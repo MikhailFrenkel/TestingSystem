@@ -49,13 +49,22 @@
                 @Html.DisplayFor(modelItem => item.Answers.Count)
             </td>
             <td>
+                @Ajax.ActionLink("Select", "Select", new  {id = item.Id }, new AjaxOptions { UpdateTargetId = "selected",
+                                                                       LoadingElementId = "loading" }) |
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Delete", "Delete", new {id = item.Id})
             </td>
         </tr>
     }
 
 </table>
+<br />
+
+<div id="selected"></div>
+<div id="loading" style="display: none; font-weight: bold;">
+    <p>Идёт загрузка...</p>
+</div>
+
 <br />
 
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
