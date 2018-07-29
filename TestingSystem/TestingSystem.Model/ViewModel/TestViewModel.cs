@@ -9,6 +9,7 @@ namespace TestingSystem.Model.ViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int Duration { get; set; }
         public IList<QuestionViewModel> Questions { get; set; }
 
         public TestViewModel()
@@ -19,6 +20,7 @@ namespace TestingSystem.Model.ViewModel
         {
             Id = test.Id;
             Name = test.Name;
+            Duration = test.Duration;
             Questions = new List<QuestionViewModel>();
             foreach (var question in test.Questions)
             {
