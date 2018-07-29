@@ -11,7 +11,6 @@ namespace TestingSystem.Model.ViewModel
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        [Required(ErrorMessage = "Ответьте на вопрос")]
         public IList<int> CorrectAnswers { get; set; }
         public IList<AnswerViewModel> Answers { get; set; }
 
