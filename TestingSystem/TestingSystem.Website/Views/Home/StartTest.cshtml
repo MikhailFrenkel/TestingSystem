@@ -2,9 +2,11 @@
 @{
     ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var endTime = (DateTime.UtcNow).AddSeconds(30);
+    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds.ToString("#");
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("StartTest", "Home", FormMethod.Post, new { @id = "form" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "Ответьте на все вопросы", new { @class = "text-danger" })
@@ -12,6 +14,9 @@
     @Html.HiddenFor(model => model.Name)
 
     <h2>@Model.Name</h2>
+    <div>Осталось времени: <span id="minRemaining"></span>:<span id="secRemaining"></span></div>
+    @DateTime.Now.AddMinutes(2);
+    <hr>
     <ol class="list-group">
         @for (int i = 0; i < Model.Questions.Count; i++)
         {
@@ -47,3 +52,43 @@
         </div>
     </div>
 }
+
+    <script>
+
+    var remSeconds = @timeRemaining;
+    var secondsCounter = remSeconds % 60;
+
+    function formatNumber(number)
+    {
+        if(number < 10) return '0' + number;
+        else return '' + number;
+
+    }
+
+    function startTick()
+    {
+        document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+        document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
+
+        var _tick = setInterval(function()
+        {
+            if(remSeconds > 0)
+            {
+                remSeconds = remSeconds-1;
+                secondsCounter = secondsCounter-1;
+                document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+                document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
+
+                if(secondsCounter==0)
+                    secondsCounter = 60;
+            }
+            else {
+                alert('Время вышло');
+                clearInterval(_tick);
+                document.getElementById('form').submit();
+            }
+        }, 1000);
+
+    }
+    startTick();
+</script>
