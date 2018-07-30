@@ -10,6 +10,7 @@ namespace TestingSystem.Model.ViewModel
     {
         public int Id { get; set; }
         public string Text { get; set; }
+        public bool IsCorrect { get; set; }
 
         public AnswerViewModel()
         {
@@ -19,6 +20,7 @@ namespace TestingSystem.Model.ViewModel
         {
             Id = answer.Id;
             Text = answer.Text;
+            IsCorrect = answer.isCorrect;
         }
     }
 }

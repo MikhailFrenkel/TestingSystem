@@ -31,5 +31,27 @@ namespace TestingSystem.Model.ViewModel
                 Answers.Add(new AnswerViewModel(answer));
             }
         }
+
+        public bool IsCanPass
+        {
+            get
+            {
+                bool result = false;
+
+                if (Answers != null)
+                {
+                    if (Answers.Count == 0)
+                        return false;
+
+                    foreach (var answer in Answers)
+                    {
+                        if (answer.IsCorrect)
+                            result = true;
+                    }
+                }
+
+                return result;
+            }
+        }
     }
 }
