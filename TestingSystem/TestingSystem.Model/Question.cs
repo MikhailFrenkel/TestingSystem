@@ -6,6 +6,7 @@ namespace TestingSystem.Model
     public class Question
     {
         public int Id { get; set; }
+        [Required]
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }
         public virtual List<Answer> Answers { get; set; }

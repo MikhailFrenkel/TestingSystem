@@ -10,9 +10,8 @@ namespace TestingSystem.Website
     {
         protected void Application_Start()
         {
-            AutofacConfig.ConfigureContainer();
             Database.SetInitializer(new TestInitializer());
-            
+            AutofacConfig.ConfigureContainer();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }

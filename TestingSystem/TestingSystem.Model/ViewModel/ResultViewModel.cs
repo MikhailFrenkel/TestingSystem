@@ -16,5 +16,7 @@ namespace TestingSystem.Model.ViewModel
 
         [Required]
         public int CountQuestions { get; set; }
+
+        public IList<QuestionViewModel> Questions { get; set; }
     }
 }

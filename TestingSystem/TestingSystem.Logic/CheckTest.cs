@@ -15,6 +15,16 @@ namespace TestingSystem.Logic
             ResultViewModel result = new ResultViewModel();
             result.TestName = test.Name;
             result.CountQuestions = test.Questions.Count;
+            result.Questions = new List<QuestionViewModel>();
+            foreach (var question in test.Questions)
+            {
+                result.Questions.Add(new QuestionViewModel(question));
+            }
+
+            for (int i = 0; i < result.Questions.Count; i++)
+            {
+                result.Questions[i].CorrectAnswers = tvm.Questions[i].CorrectAnswers;
+            }
 
             for (int i = 0; i < tvm.Questions.Count; i++)
             {

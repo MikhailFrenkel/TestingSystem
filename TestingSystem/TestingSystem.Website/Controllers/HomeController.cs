@@ -40,7 +40,8 @@ namespace TestingSystem.Website.Controllers
             Test test = _testRepository.GetById((int)id);
             if (test == null)
                 return HttpNotFound();
-            return View(test);
+            TestViewModel tvm = new TestViewModel(test);
+            return View(tvm);
         }
 
         [Authorize(Roles = "user")]
@@ -64,20 +65,25 @@ namespace TestingSystem.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResultViewModel result = CheckTest.Check(_testRepository.GetById(tvm.Id), tvm);
-                return RedirectToAction("Result", result);
+                TempData["tvm"] = tvm;
+                return RedirectToAction("Result");
             }
             tvm = new TestViewModel(_testRepository.GetById(tvm.Id));
             return View(tvm);
         }
 
         [Authorize(Roles = "user")]
-        public ActionResult Result(ResultViewModel result)
+        public ActionResult Result()
         {
-            if (result == null)
+            if (!ModelState.IsValid)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            TestViewModel tvm = TempData["tvm"] as TestViewModel;
+            if (tvm == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ResultViewModel result = CheckTest.Check(_testRepository.GetById(tvm.Id), tvm);
 
             return View(result);
         }

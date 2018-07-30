@@ -1,4 +1,4 @@
-﻿@model TestingSystem.Model.Test
+﻿@model TestingSystem.Model.ViewModel.TestViewModel
 @{
     ViewBag.Title = "Test";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,11 +7,19 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <h3>@Model.Name</h3>
-        <span>@Model.Description<br /><br />
+        <span>
+            @Model.Description<br /><br />
             Count of questions - @Model.Questions.Count<br />
             Time - @Model.Duration<br />
         </span>
-        @Html.ActionLink("Start", "StartTest", new { id = Model.Id }, new { @class = "btn btn-default" })
+        @if (Model.IsCanPass)
+        {
+            @Html.ActionLink("Start", "StartTest", new { id = Model.Id }, new { @class = "btn btn-primary" })
+        }
+        else
+        {
+            @Html.ActionLink("Start", "StartTest", new { id = Model.Id }, new { @class = "btn btn-primary disabled" })
+        }
     </div>
 </div>
 

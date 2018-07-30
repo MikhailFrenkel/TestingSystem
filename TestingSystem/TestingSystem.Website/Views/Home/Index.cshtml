@@ -10,24 +10,30 @@
         for (int i = 0; i < Model.Count; i += 2)
         {
             <div class="row">
-                <div class="col-md-6">
-                    <ul>@Model[i].Title
-                        @foreach (var test in Model[i].Tests)
-                        {
-                            <li>@Html.ActionLink(test.Name, "Test", new { id = test.Id })</li>
-                        }
-                    </ul>
-                </div>
-                @if (i < Model.Count - 1)
+                @if (Model[i].Tests.Count != 0)
                 {
                     <div class="col-md-6">
-                        <ul>@Model[i + 1].Title
-                            @foreach (var test in Model[i + 1].Tests)
+                        <ul>@Model[i].Title
+                            @foreach (var test in Model[i].Tests)
                             {
-                                <li>@Html.ActionLink(test.Name, "Test", new { id = test.Id })</li>
+                                <li>@Html.ActionLink(test.Name, "Test", new {id = test.Id})</li>
                             }
                         </ul>
                     </div>
+                }
+                @if (i < Model.Count - 1)
+                {
+                    if (Model[i + 1].Tests.Count != 0)
+                    {
+                        <div class="col-md-6">
+                            <ul>@Model[i + 1].Title
+                                @foreach (var test in Model[i + 1].Tests)
+                                {
+                                    <li>@Html.ActionLink(test.Name, "Test", new {id = test.Id})</li>
+                                }
+                            </ul>
+                        </div>
+                    }
                 }
             </div>   
         }
