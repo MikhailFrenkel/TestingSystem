@@ -20,13 +20,13 @@ namespace TestingSystem.Logic
             {
                 if (tvm.Questions[i].CorrectAnswers != null)
                 {
-                    Question question = test.Questions.FirstOrDefault(x => x.Id == tvm.Questions[i].Id);
+                    Question question = test.Questions.Find(x => x.Id == tvm.Questions[i].Id);
                     if (question != null)
                     {
                         int temp = 0;
                         foreach (var answer in tvm.Questions[i].CorrectAnswers)
                         {
-                            if (question.Answers.FirstOrDefault(x => x.Id == answer) != null)
+                            if (question.Answers.Find(x => x.Id == answer && x.isCorrect) != null)
                                 temp++;
                         }
 
