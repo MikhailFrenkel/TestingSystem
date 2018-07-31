@@ -8,7 +8,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    @Html.Hidden("urlReferrer", ViewBag.UrlReferrer as string)
+
     <div class="form-horizontal">
         <h4>Test</h4>
         <hr />
@@ -56,5 +57,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@ViewBag.UrlReferrer" class="btn btn-default">Back</a>
 </div>

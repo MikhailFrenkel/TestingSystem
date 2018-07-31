@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -22,7 +23,7 @@ namespace TestingSystem.Website.Controllers.Admin
             _answerRepository = answer;
         }
 
-        public ActionResult Index(int? testId, int? page)
+        /*public ActionResult Index(int? testId, int? page)
         {
             int pageSize = 8;
             int pageNumber = page ?? 1;
@@ -39,7 +40,7 @@ namespace TestingSystem.Website.Controllers.Admin
                 }
             }
             return View(_answerRepository.GetAll().ToPagedList(pageNumber, pageSize));
-        }
+        }*/
 
         public ActionResult Create(int? questionId)
         {
@@ -66,9 +67,9 @@ namespace TestingSystem.Website.Controllers.Admin
             {
                 _answerRepository.Create(answer);
                 _answerRepository.Save();
-                if (urlReferrer != null)
+                if (!String.IsNullOrEmpty(urlReferrer))
                     return Redirect(urlReferrer);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Question");
             }
 
             ViewBag.QuestionId = new SelectList(_questionRepository.GetAll().ToList(), "Id", "Text", answer.QuestionId);
@@ -86,6 +87,7 @@ namespace TestingSystem.Website.Controllers.Admin
             {
                 return HttpNotFound();
             }
+
             ViewBag.UrlReferrer = Request.UrlReferrer?.ToString();
             ViewBag.QuestionId = new SelectList(_questionRepository.GetAll().ToList(), "Id", "Text", answer.QuestionId);
             return View(answer);
@@ -99,9 +101,9 @@ namespace TestingSystem.Website.Controllers.Admin
             {
                 _answerRepository.Update(answer);
                 _answerRepository.Save();
-                if (urlReferrer != null)
+                if (!String.IsNullOrEmpty(urlReferrer))
                     return Redirect(urlReferrer);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Question");
             }
             ViewBag.QuestionId = new SelectList(_questionRepository.GetAll().ToList(), "Id", "Text", answer.QuestionId);
             return View(answer);
@@ -128,9 +130,9 @@ namespace TestingSystem.Website.Controllers.Admin
         {
             _answerRepository.Delete(id);
             _answerRepository.Save();
-            if (urlReferrer != null)
+            if (!String.IsNullOrEmpty(urlReferrer))
                 return Redirect(urlReferrer);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Question");
         }
     }
 }

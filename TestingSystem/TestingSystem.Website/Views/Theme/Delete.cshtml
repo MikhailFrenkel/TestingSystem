@@ -20,12 +20,14 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
+        @Html.Hidden("urlReferrer", ViewBag.UrlReferrer as string)
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <a href="@ViewBag.UrlReferrer" class="btn btn-default">Back</a>
         </div>
     }
 </div>

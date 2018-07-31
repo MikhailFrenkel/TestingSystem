@@ -39,17 +39,20 @@ namespace TestingSystem.Website.Controllers.Admin
 
         public ActionResult Create()
         {
+            ViewBag.UrlReferrer = Request.UrlReferrer;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title")] Theme theme)
+        public ActionResult Create(string urlReferrer, Theme theme)
         {
             if (ModelState.IsValid)
             {
                 _themeRepository.Create(theme);
                 _themeRepository.Save();
+                if (!String.IsNullOrEmpty(urlReferrer))
+                    return Redirect(urlReferrer);
                 return RedirectToAction("Index");
             }
 
@@ -67,17 +70,20 @@ namespace TestingSystem.Website.Controllers.Admin
             {
                 return HttpNotFound();
             }
+            ViewBag.UrlReferrer = Request.UrlReferrer;
             return View(theme);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title")] Theme theme)
+        public ActionResult Edit(string urlReferrer, Theme theme)
         {
             if (ModelState.IsValid)
             {
                 _themeRepository.Update(theme);
                 _themeRepository.Save();
+                if (!String.IsNullOrEmpty(urlReferrer))
+                    return Redirect(urlReferrer);
                 return RedirectToAction("Index");
             }
             return View(theme);
@@ -94,15 +100,18 @@ namespace TestingSystem.Website.Controllers.Admin
             {
                 return HttpNotFound();
             }
+            ViewBag.UrlReferrer = Request.UrlReferrer;
             return View(theme);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string urlReferrer, int id)
         {
             _themeRepository.Delete(id);
             _themeRepository.Save();
+            if (!String.IsNullOrEmpty(urlReferrer))
+                return Redirect(urlReferrer);
             return RedirectToAction("Index");
         }
     }

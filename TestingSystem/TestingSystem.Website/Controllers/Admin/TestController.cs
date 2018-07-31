@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -41,18 +42,21 @@ namespace TestingSystem.Website.Controllers.Admin
 
         public ActionResult Create()
         {
+            ViewBag.UrlReferrer = Request.UrlReferrer;
             ViewBag.ThemeId = new SelectList(_themeRepository.GetAll().ToList(), "Id", "Title");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Duration,ThemeId")] Test test)
+        public ActionResult Create(string urlReferrer, Test test)
         {
             if (ModelState.IsValid)
             {
                 _testRepository.Create(test);
                 _testRepository.Save();
+                if (!String.IsNullOrEmpty(urlReferrer))
+                    return Redirect(urlReferrer);
                 return RedirectToAction("Index");
             }
 
@@ -71,18 +75,21 @@ namespace TestingSystem.Website.Controllers.Admin
             {
                 return HttpNotFound();
             }
+            ViewBag.UrlReferrer = Request.UrlReferrer;
             ViewBag.ThemeId = new SelectList(_themeRepository.GetAll().ToList(), "Id", "Title", test.ThemeId);
             return View(test);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Duration,ThemeId")] Test test)
+        public ActionResult Edit(string urlReferrer, Test test)
         {
             if (ModelState.IsValid)
             {
                 _testRepository.Update(test);
                 _testRepository.Save();
+                if (!String.IsNullOrEmpty(urlReferrer))
+                    return Redirect(urlReferrer);
                 return RedirectToAction("Index");
             }
             ViewBag.ThemeId = new SelectList(_themeRepository.GetAll().ToList(), "Id", "Title", test.ThemeId);
@@ -100,15 +107,18 @@ namespace TestingSystem.Website.Controllers.Admin
             {
                 return HttpNotFound();
             }
+            ViewBag.UrlReferrer = Request.UrlReferrer;
             return View(test);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string urlReferrer, int id)
         {
             _testRepository.Delete(id);
             _testRepository.Save();
+            if (!String.IsNullOrEmpty(urlReferrer))
+                return Redirect(urlReferrer);
             return RedirectToAction("Index");
         }
     }

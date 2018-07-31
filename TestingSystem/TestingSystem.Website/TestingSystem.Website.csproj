@@ -205,7 +205,6 @@
     <Content Include="Views\Answer\Create.cshtml" />
     <Content Include="Views\Answer\Delete.cshtml" />
     <Content Include="Views\Answer\Edit.cshtml" />
-    <Content Include="Views\Answer\Index.cshtml" />
     <Content Include="Views\Partial\View.cshtml" />
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
