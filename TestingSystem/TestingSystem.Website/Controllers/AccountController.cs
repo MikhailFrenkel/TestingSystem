@@ -16,20 +16,16 @@ namespace TestingSystem.Website.Controllers
 {
     public class AccountController : Controller
     {
-        private ApplicationUserManager UserManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-        }
+        private readonly ApplicationUserManager _userManager;
+        private readonly ApplicationSignInManager _signInManager;
+        private readonly IAuthenticationManager _authManager;
 
-        private IAuthenticationManager AuthenticationManager
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, 
+                                    IAuthenticationManager authManager)
         {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _authManager = authManager;
         }
 
         public ActionResult Login()
@@ -43,17 +39,17 @@ namespace TestingSystem.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = await UserManager.FindAsync(lvm.Login, lvm.Password);
+                ApplicationUser user = await _userManager.FindAsync(lvm.Login, lvm.Password);
                 if (user == null)
                 {
                     ModelState.AddModelError("", "Неверный логин или пароль");
                 }
                 else
                 {
-                    ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user, 
+                    ClaimsIdentity claim = await _userManager.CreateIdentityAsync(user, 
                                                 DefaultAuthenticationTypes.ApplicationCookie);
-                    AuthenticationManager.SignOut();
-                    AuthenticationManager.SignIn(new AuthenticationProperties
+                    _authManager.SignOut();
+                    _authManager.SignIn(new AuthenticationProperties
                     {
                         IsPersistent = true
                     }, claim);
@@ -75,7 +71,7 @@ namespace TestingSystem.Website.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = new ApplicationUser {UserName = rvm.Login, Email = rvm.Email };
-                IdentityResult result = await UserManager.CreateAsync(user, rvm.Password);
+                IdentityResult result = await _userManager.CreateAsync(user, rvm.Password);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
@@ -96,7 +92,7 @@ namespace TestingSystem.Website.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            _authManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
     }

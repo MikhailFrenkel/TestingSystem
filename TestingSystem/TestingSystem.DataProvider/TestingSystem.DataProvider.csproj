@@ -93,7 +93,9 @@
   <ItemGroup>
     <Compile Include="DataContext\ApplicationDbContext.cs" />
     <Compile Include="DataContext\TestInitializer.cs" />
+    <Compile Include="Manager\ApplicationSignInManager.cs" />
     <Compile Include="Manager\ApplicationUserManager.cs" />
+    <Compile Include="Manager\ApplicationUserStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AnswerRepository.cs" />
     <Compile Include="Repositories\QuestionRepository.cs" />

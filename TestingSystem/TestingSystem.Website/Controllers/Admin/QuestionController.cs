@@ -38,7 +38,7 @@ namespace TestingSystem.Website.Controllers.Admin
                 }
             }
 
-            return View(_questionRepository.GetAll().OrderBy(x => x.Test.Name).ToPagedList(pageNumber, pageSize));
+            return View(_questionRepository.GetAll().OrderBy(x => x.Text).ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Create()

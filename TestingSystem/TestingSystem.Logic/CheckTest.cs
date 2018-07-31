@@ -38,6 +38,9 @@ namespace TestingSystem.Logic
                         {
                             if (question.Answers.Find(x => x.Id == answer && x.isCorrect) != null)
                                 temp++;
+
+                            if (question.Answers.Find(x => x.Id == answer && !x.isCorrect) != null)
+                                temp--;
                         }
 
                         if (temp == question.CorrectAnswer)

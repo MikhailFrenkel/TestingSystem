@@ -16,9 +16,23 @@ namespace TestingSystem.DataProvider.Manager
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store) : base(store)
         {
+            PasswordValidator = new PasswordValidator
+            {
+                RequiredLength = 4,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false
+            };
+
+            UserValidator = new UserValidator<ApplicationUser>(this)
+            {
+                AllowOnlyAlphanumericUserNames = false,
+                RequireUniqueEmail = false
+            };
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
+        /*public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
                                                         IOwinContext context)
         {
             ApplicationDbContext db = context.Get<ApplicationDbContext>();
@@ -40,6 +54,6 @@ namespace TestingSystem.DataProvider.Manager
             };
 
             return manager;
-        }
+        }*/
     }
 }

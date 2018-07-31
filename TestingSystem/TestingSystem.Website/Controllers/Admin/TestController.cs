@@ -36,7 +36,7 @@ namespace TestingSystem.Website.Controllers.Admin
                     return View(theme.Tests.OrderBy(x => x.Theme.Title).ToPagedList(pageNumber, pageSize));
                 }
             }
-            return View(_testRepository.GetAll().OrderBy(x => x.Theme.Title).ToPagedList(pageNumber, pageSize));
+            return View(_testRepository.GetAll().OrderBy(x => x.Name).ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Create()
