@@ -1,10 +1,16 @@
 ﻿@model PagedList.IPagedList<TestingSystem.Model.Question>
 @using PagedList.Mvc
+@using TestingSystem.Model
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Questions";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var array = new int[Model.Count];
+    for (int i = 0; i < Model.Count; i++)
+    {
+        array[i] = Model[i].Id;
+    }
 }
 
 <h2>Questions</h2>
@@ -38,7 +44,7 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr id="tr_@item.Id">
             <td>
                 @Html.DisplayFor(modelItem => item.Test.Name)
             </td>
@@ -50,9 +56,9 @@
             </td>
             <td>
                 @Ajax.ActionLink("Select", "Select", new  {id = item.Id }, new AjaxOptions { UpdateTargetId = "selected",
-                                                                       LoadingElementId = "loading" }) |
+                                                                       LoadingElementId = "loading" }, new { id = item.Id }) |
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
@@ -60,10 +66,11 @@
 </table>
 <br />
 
-<div id="selected"></div>
 <div id="loading" style="display: none; font-weight: bold;">
     <p>Идёт загрузка...</p>
 </div>
+
+<div id="selected"></div>
 
 <br />
 
@@ -71,3 +78,26 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
 
 @Html.PagedListPager(Model, page => Url.Action("Index", new { testId = ViewBag.id, page }))
 
+<script type="text/javascript">
+
+    function setHandlers() {
+        @for (var i = 0; i < Model.Count; i++)
+        {
+            <text>
+                document.getElementById(@Model[i].Id).onclick = clickHandler;
+            </text>
+        }
+    }
+
+    function clickHandler() {
+        @for (var i = 0; i < Model.Count; i++)
+        {
+            <text>
+                document.getElementById("tr_" + @Model[i].Id).removeAttribute("class");
+            </text>
+        }
+        document.getElementById("tr_" + this.id).setAttribute("class", "success");
+    }
+
+    setHandlers();
+</script>
