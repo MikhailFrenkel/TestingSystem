@@ -10,7 +10,8 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+    @Html.Hidden("urlReferrer", ViewBag.UrlReferrer as string)   
+
     <div class="form-horizontal">
         <h4>LoginViewModel</h4>
         <hr />

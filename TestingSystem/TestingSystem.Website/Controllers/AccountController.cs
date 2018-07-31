@@ -30,12 +30,13 @@ namespace TestingSystem.Website.Controllers
 
         public ActionResult Login()
         {
+            ViewBag.UrlReferrer = Request.UrlReferrer?.ToString();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel lvm)
+        public async Task<ActionResult> Login(string urlReferrer, LoginViewModel lvm)
         {
             if (ModelState.IsValid)
             {
@@ -53,6 +54,8 @@ namespace TestingSystem.Website.Controllers
                     {
                         IsPersistent = true
                     }, claim);
+                    if (urlReferrer != null)
+                        return Redirect(urlReferrer);
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -61,12 +64,13 @@ namespace TestingSystem.Website.Controllers
 
         public ActionResult Register()
         {
+            ViewBag.UrlReferrer = Request.UrlReferrer?.ToString();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel rvm)
+        public async Task<ActionResult> Register(string urlReferrer, RegisterViewModel rvm)
         {
             if (ModelState.IsValid)
             {
@@ -74,6 +78,8 @@ namespace TestingSystem.Website.Controllers
                 IdentityResult result = await _userManager.CreateAsync(user, rvm.Password);
                 if (result.Succeeded)
                 {
+                    if (urlReferrer != null)
+                        return Redirect(urlReferrer);
                     return RedirectToAction("Index", "Home");
                 }
                 else

@@ -114,9 +114,12 @@ namespace TestingSystem.Website.Controllers.Admin
             return RedirectToAction("Index");
         }
 
-        public ActionResult Select(int id)
+        public ActionResult Select(int? id)
         {
-            List<Answer> answers = _questionRepository.GetById(id).Answers.ToList();
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            List<Answer> answers = _questionRepository.GetById((int)id).Answers.ToList();
+            ViewBag.QuestionId = id;
             return PartialView(answers);
         }
     }

@@ -16,13 +16,20 @@
             <ul>@question.Text
                 @foreach (var answer in question.Answers)
                 {
-                    if (question.CorrectAnswers.Contains(answer.Id) && answer.IsCorrect)
+                    if (question.CorrectAnswers != null)
                     {
-                        <li style="color: green">@answer.Text</li>
-                    }
-                    else if (question.CorrectAnswers.Contains(answer.Id) && !answer.IsCorrect)
-                    {
-                        <li style="color: red">@answer.Text</li>
+                        if (question.CorrectAnswers.Contains(answer.Id) && answer.IsCorrect)
+                        {
+                            <li style="color: green">@answer.Text</li>
+                        }
+                        else if (question.CorrectAnswers.Contains(answer.Id) && !answer.IsCorrect)
+                        {
+                            <li style="color: red">@answer.Text</li>
+                        }
+                        else
+                        {
+                            <li>@answer.Text</li>
+                        }
                     }
                     else
                     {

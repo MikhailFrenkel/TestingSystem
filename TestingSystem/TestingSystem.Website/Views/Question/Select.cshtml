@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TestingSystem.Model.Answer>
 
 <p>
-    @Html.ActionLink("Create New", "Create", "Answer")
+    @Html.ActionLink("Create New", "Create", "Answer", new { questionId = ViewBag.QuestionId }, null)
 </p>
 <table class="table">
     <tr>
@@ -10,9 +10,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.isCorrect)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QuestionId)
         </th>
         <th></th>
     </tr>
@@ -26,8 +23,8 @@
                 @Html.DisplayFor(modelItem => item.isCorrect)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", "Answer", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", "Answer", new { id=item.Id })
+                @Html.ActionLink("Edit", "Edit", "Answer", new { id=item.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "Answer", new { id=item.Id }, null)
             </td>
         </tr>
     }

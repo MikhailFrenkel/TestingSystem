@@ -8,7 +8,7 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+    @Html.Hidden("urlReferrer", ViewBag.UrlReferrer as string)
     <div class="form-horizontal">
         <h4>Answer</h4>
         <hr />

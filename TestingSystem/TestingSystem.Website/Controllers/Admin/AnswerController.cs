@@ -41,20 +41,33 @@ namespace TestingSystem.Website.Controllers.Admin
             return View(_answerRepository.GetAll().ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int? questionId)
         {
-            ViewBag.QuestionId = new SelectList(_questionRepository.GetAll().ToList(), "Id", "Text");
+            if (questionId != null)
+            {
+                Question question = _questionRepository.GetById((int)questionId);
+                if (question != null)
+                    ViewBag.QuestionId = new SelectList(new List<Question> {question}, "Id", "Text");
+                else
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }            
+            else
+                ViewBag.QuestionId = new SelectList(_questionRepository.GetAll().ToList(), "Id", "Text");
+
+            ViewBag.UrlReferrer = Request.UrlReferrer?.ToString();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Text,isCorrect,QuestionId")] Answer answer)
+        public ActionResult Create(string urlReferrer, Answer answer)
         {
             if (ModelState.IsValid)
             {
                 _answerRepository.Create(answer);
                 _answerRepository.Save();
+                if (urlReferrer != null)
+                    return Redirect(urlReferrer);
                 return RedirectToAction("Index");
             }
 
@@ -73,18 +86,21 @@ namespace TestingSystem.Website.Controllers.Admin
             {
                 return HttpNotFound();
             }
+            ViewBag.UrlReferrer = Request.UrlReferrer?.ToString();
             ViewBag.QuestionId = new SelectList(_questionRepository.GetAll().ToList(), "Id", "Text", answer.QuestionId);
             return View(answer);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Text,isCorrect,QuestionId")] Answer answer)
+        public ActionResult Edit(string urlReferrer, Answer answer)
         {
             if (ModelState.IsValid)
             {
                 _answerRepository.Update(answer);
                 _answerRepository.Save();
+                if (urlReferrer != null)
+                    return Redirect(urlReferrer);
                 return RedirectToAction("Index");
             }
             ViewBag.QuestionId = new SelectList(_questionRepository.GetAll().ToList(), "Id", "Text", answer.QuestionId);
@@ -102,15 +118,18 @@ namespace TestingSystem.Website.Controllers.Admin
             {
                 return HttpNotFound();
             }
+            ViewBag.UrlReferrer = Request.UrlReferrer?.ToString();
             return View(answer);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string urlReferrer, int id)
         {
             _answerRepository.Delete(id);
             _answerRepository.Save();
+            if (urlReferrer != null)
+                return Redirect(urlReferrer);
             return RedirectToAction("Index");
         }
     }
