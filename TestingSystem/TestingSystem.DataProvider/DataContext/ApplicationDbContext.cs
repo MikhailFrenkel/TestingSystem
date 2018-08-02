@@ -4,6 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using Microsoft.AspNet.Identity.EntityFramework;
 using TestingSystem.Model;
 using TestingSystem.Model.Identity;
+using TestingSystem.Model.ViewModel;
 
 namespace TestingSystem.DataProvider.DataContext
 {
@@ -16,6 +17,7 @@ namespace TestingSystem.DataProvider.DataContext
         public DbSet<Test> Tests { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<Result> Results { get; set; }
 
         public static ApplicationDbContext Create()
         {

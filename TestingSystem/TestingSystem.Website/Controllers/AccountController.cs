@@ -5,10 +5,13 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using TestingSystem.Common.Interfaces;
 using TestingSystem.DataProvider.Manager;
+using TestingSystem.Model;
 using TestingSystem.Model.Identity;
 using TestingSystem.Model.ViewModel;
 
@@ -19,13 +22,15 @@ namespace TestingSystem.Website.Controllers
         private readonly ApplicationUserManager _userManager;
         private readonly ApplicationSignInManager _signInManager;
         private readonly IAuthenticationManager _authManager;
+        private readonly IRepository<Result> _resultRepository;
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, 
-                                    IAuthenticationManager authManager)
+                                    IAuthenticationManager authManager, IRepository<Result> result)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _authManager = authManager;
+            _resultRepository = result;
         }
 
         public ActionResult Login()
@@ -54,7 +59,7 @@ namespace TestingSystem.Website.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    if (urlReferrer != null)
+                    if (String.IsNullOrEmpty(urlReferrer))
                         return Redirect(urlReferrer);
                     return RedirectToAction("Index", "Home");
                 }
@@ -74,11 +79,13 @@ namespace TestingSystem.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser {UserName = rvm.Login, Email = rvm.Email };
+                ApplicationUser user = new ApplicationUser {UserName = rvm.Login, Email = rvm.Email};
                 IdentityResult result = await _userManager.CreateAsync(user, rvm.Password);
                 if (result.Succeeded)
                 {
-                    if (urlReferrer != null)
+                    _userManager.AddToRole(user.Id, "user");
+                    await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    if (String.IsNullOrEmpty(urlReferrer))
                         return Redirect(urlReferrer);
                     return RedirectToAction("Index", "Home");
                 }
@@ -100,6 +107,16 @@ namespace TestingSystem.Website.Controllers
         {
             _authManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult AllUsers()
+        {
+            List<UserViewModel> uvm = new List<UserViewModel>();
+            foreach (var user in _userManager.Users)
+            {
+                uvm.Add(new UserViewModel(user));
+            }
+            return View(uvm);
         }
     }
 }

@@ -49,6 +49,7 @@ namespace TestingSystem.Logic
                 }
             }
 
+            result.DateOfPassing = DateTime.Now;
             return result;
         }
     }

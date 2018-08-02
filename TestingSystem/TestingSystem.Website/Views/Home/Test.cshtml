@@ -1,4 +1,5 @@
 ﻿@model TestingSystem.Model.ViewModel.TestViewModel
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Test";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,13 +13,24 @@
             Count of questions - @Model.Questions.Count<br />
             Time - @Model.Duration<br />
         </span>
-        @if (Model.IsCanPass)
+        @if (Request.IsAuthenticated)
         {
-            @Html.ActionLink("Start", "StartTest", new { id = Model.Id }, new { @class = "btn btn-primary" })
+             if (Model.IsCanPass)
+             {
+                 @Html.ActionLink("Start", "StartTest", new {id = Model.Id}, new {@class = "btn btn-primary"})
+             }
+             else
+             {
+                 @Html.ActionLink("Start", "StartTest", new {id = Model.Id}, new {@class = "btn btn-primary disabled"})
+             }
         }
         else
         {
-            @Html.ActionLink("Start", "StartTest", new { id = Model.Id }, new { @class = "btn btn-primary disabled" })
+            <span>Для прохождения теста авторизируйтесь:</span>
+            <div>
+                @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-primary"})
+                @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-primary"})
+            </div>
         }
     </div>
 </div>

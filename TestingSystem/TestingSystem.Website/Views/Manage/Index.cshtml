@@ -1,0 +1,55 @@
+﻿@model TestingSystem.Model.ViewModel.UserViewModel
+
+@{
+    ViewBag.Title = "My Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+    
+    <h4>Your tests results:</h4>
+    <table class="table">
+        <tr>
+            <th>Test</th>
+            <th>Count Correct Questions</th>
+            <th>Count Questions</th>
+            <th>Date of passing</th>
+        </tr>
+        @if (Model.Results.Count != 0)
+        {
+            foreach (var item in Model.Results)
+            {
+                <tr>
+                    <td>@item.TestName</td>
+                    <td>@item.CountCorrectQuestion</td>
+                    <td>@item.CountQuestions</td>
+                    <td>@item.DateOfPassing</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" align="center"><span style="font-size: 16px;">You haven't any results</span></td>
+            </tr>
+        }
+    </table>
+</div>
+

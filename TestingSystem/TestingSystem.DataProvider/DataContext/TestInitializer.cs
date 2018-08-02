@@ -12,7 +12,6 @@ namespace TestingSystem.DataProvider.DataContext
     {
         protected override void Seed(ApplicationDbContext db)
         {
-
             List<Theme> themes = new List<Theme>()
             {
                 new Theme

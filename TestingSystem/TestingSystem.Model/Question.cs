@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TestingSystem.Model.ViewModel;
 
 namespace TestingSystem.Model
 {
@@ -9,6 +10,7 @@ namespace TestingSystem.Model
         [Required]
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }
+
         public virtual List<Answer> Answers { get; set; }
 
         public int CorrectAnswer
