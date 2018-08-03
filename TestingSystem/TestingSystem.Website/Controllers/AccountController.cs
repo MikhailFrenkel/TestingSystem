@@ -59,7 +59,7 @@ namespace TestingSystem.Website.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    if (String.IsNullOrEmpty(urlReferrer))
+                    if (!String.IsNullOrEmpty(urlReferrer))
                         return Redirect(urlReferrer);
                     return RedirectToAction("Index", "Home");
                 }
@@ -85,7 +85,7 @@ namespace TestingSystem.Website.Controllers
                 {
                     _userManager.AddToRole(user.Id, "user");
                     await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    if (String.IsNullOrEmpty(urlReferrer))
+                    if (!String.IsNullOrEmpty(urlReferrer))
                         return Redirect(urlReferrer);
                     return RedirectToAction("Index", "Home");
                 }

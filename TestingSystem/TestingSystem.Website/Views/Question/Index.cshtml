@@ -93,10 +93,10 @@ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.Page
         @for (var i = 0; i < Model.Count; i++)
         {
             <text>
-                document.getElementById("tr_" + @Model[i].Id).removeAttribute("class");
+                document.getElementById("tr_" + @Model[i].Id).removeAttribute("style");
             </text>
         }
-        document.getElementById("tr_" + this.id).setAttribute("class", "success");
+        document.getElementById("tr_" + this.id).setAttribute("style", "background-color: #80b1b2;");
     }
     setHandlers();
 </script>
