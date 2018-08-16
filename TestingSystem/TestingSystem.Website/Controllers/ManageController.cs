@@ -16,12 +16,10 @@ namespace TestingSystem.Website.Controllers
     public class ManageController : Controller
     {
         private readonly ApplicationUserManager _userManager;
-        private readonly IRepository<Result> _resultRepository;
 
-        public ManageController(ApplicationUserManager manager, IRepository<Result> result)
+        public ManageController(ApplicationUserManager manager)
         {
             _userManager = manager;
-            _resultRepository = result;
         }
 
         public ActionResult Index()

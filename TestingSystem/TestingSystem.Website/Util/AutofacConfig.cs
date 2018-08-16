@@ -30,14 +30,11 @@ namespace TestingSystem.Website.Util
             builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
             builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerRequest();
             builder.Register<IAuthenticationManager>(x => HttpContext.Current.GetOwinContext().Authentication).InstancePerRequest();
-            //builder.Register<IDataProtectionProvider>(x => app.GetDataProtectionProvider()).InstancePerRequest();
 
             builder.RegisterType<ResultRepository>().As<IRepository<Result>>().InstancePerRequest();
             builder.RegisterType<AnswerRepository>().As<IRepository<Answer>>().InstancePerRequest();
             builder.RegisterType<QuestionRepository>().As<IRepository<Question>>().InstancePerRequest();
             builder.RegisterType<TestRepository>().As<IRepository<Test>>().InstancePerRequest();
-            builder.RegisterType<ThemeRepository>().As<IRepository<Theme>>().InstancePerRequest();
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

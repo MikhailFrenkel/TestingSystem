@@ -4,11 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PagedList;
 using TestingSystem.Common.Interfaces;
@@ -24,15 +21,13 @@ namespace TestingSystem.Website.Controllers
         private readonly ApplicationUserManager _userManager;
         private readonly ApplicationSignInManager _signInManager;
         private readonly IAuthenticationManager _authManager;
-        private readonly IRepository<Result> _resultRepository;
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, 
-                                    IAuthenticationManager authManager, IRepository<Result> result)
+                                    IAuthenticationManager authManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _authManager = authManager;
-            _resultRepository = result;
         }
 
         public ActionResult Login()

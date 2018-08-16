@@ -12,12 +12,10 @@ namespace TestingSystem.Website.Controllers.Admin
     [Authorize(Roles = "admin")]
     public class TestController : Controller
     {
-        private readonly IRepository<Theme> _themeRepository;
         private readonly IRepository<Test> _testRepository;
 
-        public TestController(IRepository<Theme> theme, IRepository<Test> test)
+        public TestController(IRepository<Test> test)
         {
-            _themeRepository = theme;
             _testRepository = test;
         }
 

@@ -13,7 +13,6 @@ namespace TestingSystem.DataProvider.DataContext
         public ApplicationDbContext() : base("DefaultConnection")
         {}
 
-        public DbSet<Theme> Themes { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }

@@ -16,26 +16,19 @@ namespace TestingSystem.Website.Controllers
     public class HomeController : Controller
     {
         private readonly IRepository<Result> _resultRepository;
-        private readonly IRepository<Answer> _answerRepository;
-        private readonly IRepository<Question> _questionRepository;
         private readonly IRepository<Test> _testRepository;
-        private readonly IRepository<Theme> _themeRepository;
         private readonly ApplicationUserManager _userManager;
 
-        public HomeController(IRepository<Answer> answer, IRepository<Question> question, IRepository<Result> result,
-                                IRepository<Test> test, IRepository<Theme> theme, ApplicationUserManager userManager)
+        public HomeController(IRepository<Result> result, IRepository<Test> test, ApplicationUserManager userManager)
         {
-            _answerRepository = answer;
-            _questionRepository = question;
             _testRepository = test;
-            _themeRepository = theme;
             _resultRepository = result;
             _userManager = userManager;
         }
 
         public ActionResult Index()
         {
-            return View(_themeRepository.GetAll().ToList());
+            return View(_testRepository.GetAll().ToList());
         }
 
         public ActionResult Test(int? id)
