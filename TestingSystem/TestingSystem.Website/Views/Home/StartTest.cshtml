@@ -6,53 +6,58 @@
     var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds.ToString("#");
 }
 
-@using (Html.BeginForm("StartTest", "Home", FormMethod.Post, new { @id = "form" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "Ответьте на все вопросы", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
-    @Html.HiddenFor(model => model.Name)
+<div class="container-fluid p-4" style="background-color: #eee; min-height: 91%;">
+	<div class="container">
+		@using (Html.BeginForm("StartTest", "Home", FormMethod.Post, new {@id = "form"}))
+		{
+			@Html.AntiForgeryToken()
+			@Html.ValidationSummary(true, "Ответьте на все вопросы", new {@class = "text-danger"})
+			@Html.HiddenFor(model => model.Id)
+			@Html.HiddenFor(model => model.Name)
 
-    <h2>@Model.Name</h2>
-    <div>Осталось времени: <span id="minRemaining"></span>:<span id="secRemaining"></span></div>
-    <hr>
-    <ol class="list-group">
-        @for (int i = 0; i < Model.Questions.Count; i++)
-        {
-            @Html.HiddenFor(model => model.Questions[i].Id)
-            @Html.HiddenFor(model => model.Questions[i].Text)
-            <li><ul>@Html.DisplayFor(model => model.Questions[i].Text)
-                @for (int j = 0; j < Model.Questions[i].Answers.Count; j++)
-                {
-                    if (Model.Questions[i].CorrectAnswers.Count > 1)
-                    {
-                        <li>
-                            <input type="checkbox" name="Questions[@i].CorrectAnswers"
-                                   value="@Model.Questions[i].Answers[j].Id" />
-                            @Model.Questions[i].Answers[j].Text
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <input type="radio" name="Questions[@i].CorrectAnswers"
-                                   value="@Model.Questions[i].Answers[j].Id" />
-                            @Model.Questions[i].Answers[j].Text
-                        </li>
-                    }
-                }
-                </ul><hr />
-            </li>
-        }
-    </ol>
-    <div class="form-group">
-        <div class="col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-}
+			<h2>@Model.Name</h2>
+			<div>Time remaining: <span id="minRemaining"></span>:<span id="secRemaining"></span></div>
+			<hr>
+			<ol class="list-group">
+				@for (int i = 0; i < Model.Questions.Count; i++)
+				{
+					@Html.HiddenFor(model => model.Questions[i].Id)
+					@Html.HiddenFor(model => model.Questions[i].Text)
+					<li>
+						<ul>@Html.DisplayFor(model => model.Questions[i].Text)
+							@for (int j = 0; j < Model.Questions[i].Answers.Count; j++)
+							{
+								if (Model.Questions[i].CorrectAnswers.Count > 1)
+								{
+									<li>
+										<input type="checkbox" name="Questions[@i].CorrectAnswers"
+										       value="@Model.Questions[i].Answers[j].Id"/>
+										@Model.Questions[i].Answers[j].Text
+									</li>
+								}
+								else
+								{
+									<li>
+										<input type="radio" name="Questions[@i].CorrectAnswers"
+										       value="@Model.Questions[i].Answers[j].Id"/>
+										@Model.Questions[i].Answers[j].Text
+									</li>
+								}
+							}
+						</ul><hr/>
+					</li>
+				}
+			</ol>
+			<div class="form-group">
+				<div class="col-md-10">
+					<input type="submit" value="Save" class="btn btn-primary"/>
+				</div>
+			</div>
+		}
+	</div>
+</div>
 
-    <script>
+<script>
 
     var remSeconds = parseInt(@timeRemaining);
     var secondsCounter = remSeconds % 60;
@@ -81,7 +86,7 @@
                 document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
             }
             else {
-                alert('Время вышло');
+                alert('Time over');
                 clearInterval(_tick);
                 document.getElementById('form').submit();
             }

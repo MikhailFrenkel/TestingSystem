@@ -5,39 +5,63 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.Hidden("urlReferrer", ViewBag.UrlReferrer as string)
+<div class="container">
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
+		@Html.Hidden("urlReferrer", ViewBag.UrlReferrer as string)
 
-    <div class="form-horizontal">
-        <h4>Question</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
-            </div>
-        </div>
+		<div>
+			<h4>Question</h4>
+			<hr />
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+			<div class="form-group">
+				@Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "col-form-label col-md-2 font-weight-bold" })
+				<div class="col-md-6">
+					@Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+				</div>
+			</div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TestId, "Test", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TestId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TestId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    <a href="@ViewBag.UrlReferrer" class="btn btn-default">Back</a>
+			<div class="form-group">
+				@Html.LabelFor(model => model.TestId, "Test", htmlAttributes: new { @class = "col-form-label col-md-2 font-weight-bold" })
+				<div class="col-md-6">
+					@Html.DropDownList("TestId", null, htmlAttributes: new { @class = "form-control" })
+					@Html.ValidationMessageFor(model => model.TestId, "", new { @class = "text-danger" })
+				</div>
+			</div>
+			
+			<a class="col-md-6" id="addAnswer" href="">Add answer</a>
+			<hr>
+			<div id="newAnswer"></div>
+			
+			<div class="form-group mt-2">
+				<div class="col-md-10">
+					<input id="save" type="submit" value="Create" class="btn btn-primary" /> |
+					<a href="@ViewBag.UrlReferrer" class="btn btn-primary">Back</a>
+				</div>
+			</div>
+		</div>
+	}
 </div>
+
+<script>
+	var i = 0;
+	$('#addAnswer').on('click',function(e) {
+		var html =`<span class=\"col-md-6 offset\" style=\"font-weight:bold;\">Answer ${i + 1}</span><div class=\"form-group\">
+		<label class=\"col-form-label col-md-2 font-weight-bold\" for=\"Answers_${i}__Text\">Text</label>
+		<div class=\"col-md-6\"><textarea class=\"form-control text-box multi-line\" data-val=\"true\" 
+		data-val-required=\"Required field Text.\" id=\"Answers_${i}__Text\" name=\"Answers[${i}].Text\"></textarea>
+		<span class=\"field-validation-valid text-danger\" data-valmsg-for=\"Answers[${i}].Text\" data-valmsg-replace=\"true\"></span> 
+		</div></div><div class=\"form-group\"> 
+		<label class=\"col-form-label col-md-2 font-weight-bold\" for=\"Answers_${i}__isCorrect\">isCorrect</label> 
+		<div class=\"col-md-6\"><div>
+		<input class=\"check-box\" data-val=\"true\" data-val-required=\"Required field isCorrect.\" id=\"Answers_${i}__isCorrect\"  
+		name=\"Answers[${i}].isCorrect\" type=\"checkbox\" value=\"true\"><input name=\"Answers[${i}].isCorrect\" type=\"hidden\"  
+		value=\"false\"><span class=\"field-validation-valid text-danger\" data-valmsg-for=\"Answers[${i}].isCorrect\" 
+		 data-valmsg-replace=\"true\"></span></div></div></div><hr>`;
+		$("#newAnswer").append(html);
+		i++;
+		e.preventDefault();
+	});
+</script>

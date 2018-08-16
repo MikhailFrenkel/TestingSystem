@@ -4,40 +4,44 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.TestName</h2>
+<div class="container-fluid p-4" style="background-color: #eee; min-height:91%">
+	<div class="container">
+		<h2>@Model.TestName</h2>
 
-<span>Вы ответили на @Model.CountCorrectQuestion из @Model.CountQuestions вопросов</span>
-<hr>
+		<span>You answered on @Model.CountCorrectQuestion of @Model.CountQuestions questions</span>
+		<hr>
 
-<ol>
-    @foreach (var question in Model.Questions)
-    {
-        <li>
-            <ul>@question.Text
-                @foreach (var answer in question.Answers)
-                {
-                    if (question.CorrectAnswers != null)
-                    {
-                        if (question.CorrectAnswers.Contains(answer.Id) && answer.IsCorrect)
-                        {
-                            <li style="color: green">@answer.Text</li>
-                        }
-                        else if (question.CorrectAnswers.Contains(answer.Id) && !answer.IsCorrect)
-                        {
-                            <li style="color: red">@answer.Text</li>
-                        }
-                        else
-                        {
-                            <li>@answer.Text</li>
-                        }
-                    }
-                    else
-                    {
-                        <li>@answer.Text</li>
-                    }
-                }
-            </ul>
-            <hr />
-        </li>
-    }
-</ol>
+		<ol>
+			@foreach (var question in Model.Questions)
+			{
+				<li>
+					<ul>@question.Text
+						@foreach (var answer in question.Answers)
+						{
+							if (question.CorrectAnswers != null)
+							{
+								if (question.CorrectAnswers.Contains(answer.Id) && answer.IsCorrect)
+								{
+									<li style="color: green">@answer.Text</li>
+								}
+								else if (question.CorrectAnswers.Contains(answer.Id) && !answer.IsCorrect)
+								{
+									<li style="color: red">@answer.Text</li>
+								}
+								else
+								{
+									<li>@answer.Text</li>
+								}
+							}
+							else
+							{
+								<li>@answer.Text</li>
+							}
+						}
+					</ul>
+					<hr />
+				</li>
+			}
+		</ol>
+	</div>
+</div>

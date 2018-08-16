@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 using TestingSystem.DataProvider.DataContext;
 using TestingSystem.Website.Util;
@@ -14,6 +15,7 @@ namespace TestingSystem.Website
             AutofacConfig.ConfigureContainer();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
 }

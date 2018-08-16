@@ -7,69 +7,83 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Tests</h2>
+<div class="container">
+	<h2>Tests</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+	<p>
+		@Html.ActionLink("Create New", "Create")
+	</p>
 
-<form method="get">
-    <div class="form-inline">
-        <label class="control-label">Theme: </label>
-        @Html.DropDownList("ThemeId", null, htmlAttributes: new { @class = "form-control" })
-        <input type="submit" value="Filter" class="btn btn-default" />
-    </div>
-</form>
-<br />
+	<form method="get">
+		<div class="form-inline">
+			<label class="col-form-label">Theme: </label>
+			@Html.DropDownList("ThemeId", null, htmlAttributes: new { @class = "form-control-sm ml-2 " })
+			<input type="submit" value="Filter" class="btn btn-outline-dark btn-sm ml-2" />
+		</div>
+	</form>
+	<br />
 
-<table class="table">
-    <tr>
-        <th>
-            Theme
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Duration
-        </th>
-        <th>
-            Questions
-        </th>
-        <th></th>
-    </tr>
+	<table class="table" style="word-break: break-all;">
+		<tr class="row">
+			<th class="col-2">
+				Theme
+			</th>
+			<th class="col-2">
+				Name
+			</th>
+			<th class="col-3">
+				Description
+			</th>
+			<th class="col-1">
+				Duration
+			</th>
+			<th class="col-2">
+				Questions
+			</th>
+			<th class="col-2"></th>
+		</tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Theme.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Questions.Count)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
+		@foreach (var item in Model)
+		{
+			<tr class="row">
+				<td class="col-2">
+					@Html.DisplayFor(modelItem => item.Theme.Title)
+				</td>
+				<td class="col-2">
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td class="col-3">
+					<div class="w-100">
+						@if (item?.Description != null)
+						{
+							 if (item.Description.Length > 30)
+							 {
+								 <span>@(item.Description.Substring(0, 30) + "..."))</span>
+							 }
+							 else
+							 {
+								 <span>@item.Description</span>
+							 }
+						}
+					</div>
+				</td>
+				<td class="col-1">
+					@Html.DisplayFor(modelItem => item.Duration)
+				</td>
+				<td class="col-2">
+					@Html.DisplayFor(modelItem => item.Questions.Count)
+				</td>
+				<td class="col-2">
+					@Html.ActionLink("Edit", "Edit", new { id = item?.Id }) |
+					@Html.ActionLink("Delete", "Delete", new { id = item?.Id })
+				</td>
+			</tr>
+		}
 
-</table>
-<br />
+	</table>
+	<br /><br />
 
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+	Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index", new { themeId = ViewBag.id, page }))
+	@Html.PagedListPager(Model, page => Url.Action("Index", new { themeId = ViewBag.id, page }))
+</div>

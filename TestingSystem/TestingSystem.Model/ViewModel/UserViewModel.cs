@@ -11,6 +11,8 @@ namespace TestingSystem.Model.ViewModel
 {
     public class UserViewModel
     {
+        private readonly IList<string> _roles;
+
         public string UserName { get; set; }
 
         [DataType(DataType.EmailAddress)]
@@ -18,11 +20,19 @@ namespace TestingSystem.Model.ViewModel
 
         public IList<Result> Results { get; set; }
 
+        public string Roles
+        {
+            get
+            {
+                return String.Join(", ", _roles);
+            }
+        }
+
         public UserViewModel()
         {
         }
 
-        public UserViewModel(ApplicationUser user)
+        public UserViewModel(ApplicationUser user, IList<string> roles)
         {
             Results = new List<Result>();
 
@@ -32,6 +42,8 @@ namespace TestingSystem.Model.ViewModel
 
             if (user.Results != null)
                 Results = user.Results.OrderByDescending(x => x.DateOfPassing).ToList();
+
+            _roles = roles;
         }
     }
 }

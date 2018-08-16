@@ -1,37 +1,45 @@
 ﻿@model TestingSystem.Model.ViewModel.TestViewModel
-@using Microsoft.AspNet.Identity
 @{
-    ViewBag.Title = "Test";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Test";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <h3>@Model.Name</h3>
-        <span>
-            @Model.Description<br /><br />
-            Count of questions - @Model.Questions.Count<br />
-            Time - @Model.Duration<br />
-        </span>
-        @if (Request.IsAuthenticated)
-        {
-             if (Model.IsCanPass)
-             {
-                 @Html.ActionLink("Start", "StartTest", new {id = Model.Id}, new {@class = "btn btn-primary"})
-             }
-             else
-             {
-                 @Html.ActionLink("Start", "StartTest", new {id = Model.Id}, new {@class = "btn btn-primary disabled"})
-             }
-        }
-        else
-        {
-            <span>Для прохождения теста авторизируйтесь:</span>
-            <div>
-                @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-primary"})
-                @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-primary"})
-            </div>
-        }
-    </div>
+<div class="container-fluid p-4" style="min-height: 91%; background-color: #eee;">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="card w-75 text-center">
+				<h4 class="card-header">@Model.Name</h4>
+				<div class="card-body">
+					<div class="card-title">
+						<span>Count questions: @Model.Questions.Count | Time: @Model.Duration min</span>
+					</div>
+					<div class="card-text">
+						<span>@Model.Description</span>
+					</div>
+					<div>
+						@if (Request.IsAuthenticated)
+						{
+							if (Model.IsCanPass)
+							{
+								@Html.ActionLink("Start", "StartTest", new {id = Model.Id}, new {@class = "btn btn-primary"})
+							}
+							else
+							{
+								@Html.ActionLink("Start", "StartTest", new {id = Model.Id}, new {@class = "btn btn-primary disabled"})
+							}
+						}
+						else
+						{
+							<span>Для прохождения теста авторизируйтесь:</span>
+							<div>
+								@Html.ActionLink("Login", "Login", "Account", null, new {@class = "btn btn-primary"})
+								@Html.ActionLink("Register", "Register", "Account", null, new {@class = "btn btn-primary"})
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 

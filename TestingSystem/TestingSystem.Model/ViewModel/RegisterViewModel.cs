@@ -9,18 +9,21 @@ namespace TestingSystem.Model.ViewModel
 {
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Required login")]
         public string Login { get; set; }
 
+        [EmailAddress(ErrorMessage = "Incorrect email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Required password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        [Compare("Password", ErrorMessage = "Passwords don't match")]
         [DataType(DataType.Password)]
         public string PasswordConfirmed { get; set; }
+
+        public string UrlReferrer { get; set; }
     }
 }

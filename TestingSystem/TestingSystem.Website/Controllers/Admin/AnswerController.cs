@@ -71,7 +71,8 @@ namespace TestingSystem.Website.Controllers.Admin
                     return Redirect(urlReferrer);
                 return RedirectToAction("Index", "Question");
             }
-
+            if (!String.IsNullOrEmpty(urlReferrer))
+                ViewBag.UrlReferrer = urlReferrer;
             ViewBag.QuestionId = new SelectList(_questionRepository.GetAll().ToList(), "Id", "Text", answer.QuestionId);
             return View(answer);
         }
@@ -105,6 +106,8 @@ namespace TestingSystem.Website.Controllers.Admin
                     return Redirect(urlReferrer);
                 return RedirectToAction("Index", "Question");
             }
+            if (!String.IsNullOrEmpty(urlReferrer))
+                ViewBag.UrlReferrer = urlReferrer;
             ViewBag.QuestionId = new SelectList(_questionRepository.GetAll().ToList(), "Id", "Text", answer.QuestionId);
             return View(answer);
         }

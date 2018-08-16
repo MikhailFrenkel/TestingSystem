@@ -1,41 +1,32 @@
 ﻿@model List<TestingSystem.Model.Theme>
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Main page";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Main page";
 }
 
 
-<div class="container">
-    @{
-        for (int i = 0; i < Model.Count; i += 2)
-        {
-            <div class="row">
-                @if (Model[i].Tests.Count != 0)
-                {
-                    <div class="col-md-6">
-                        <ul>@Model[i].Title
-                            @foreach (var test in Model[i].Tests)
-                            {
-                                <li>@Html.ActionLink(test.Name, "Test", new {id = test.Id})</li>
-                            }
-                        </ul>
-                    </div>
-                }
-                @if (i < Model.Count - 1)
-                {
-                    if (Model[i + 1].Tests.Count != 0)
-                    {
-                        <div class="col-md-6">
-                            <ul>@Model[i + 1].Title
-                                @foreach (var test in Model[i + 1].Tests)
-                                {
-                                    <li>@Html.ActionLink(test.Name, "Test", new {id = test.Id})</li>
-                                }
-                            </ul>
-                        </div>
-                    }
-                }
-            </div>   
-        }
-    }
+<div class="container-fluid p-2" style="background-color: #eee; min-height: 91%">
+	<div class="container">
+		<div class="card-deck justify-content-center">
+			@for (int i = 0; i < Model.Count; i++)
+			{
+				if (Model[i].Tests.Count != 0)
+				{
+
+					<div class="card m-4" style="max-width: 28%; min-width: 28%;">
+						<h6 class="card-header">@Model[i].Title</h6>
+						<div class="card-body justify-content-center">
+							@foreach (var test in Model[i].Tests)
+							{
+								<div class="row">
+									@Html.ActionLink(test.Name, "Test", new { id = test.Id }, new { @class = "btn btn-sm btn-outline-info btn-block mb-2" })
+								</div>
+							}
+						</div>
+					</div>
+				
+				}
+			}
+		</div>
+	</div>
 </div>

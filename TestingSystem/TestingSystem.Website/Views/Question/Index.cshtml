@@ -1,6 +1,5 @@
 ﻿@model PagedList.IPagedList<TestingSystem.Model.Question>
 @using PagedList.Mvc
-@using TestingSystem.Model
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -13,90 +12,108 @@
     }
 }
 
-<h2>Questions</h2>
+<div class="container">
+	<h2>Questions</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+	<p>
+		@Html.ActionLink("Create New", "Create")
+	</p>
 
-<form method="get">
-    <div class="form-inline">
-        <label class="control-label">Test: </label>
-        @Html.DropDownList("TestId", null, htmlAttributes: new { @class = "form-control" })
-        <input type="submit" value="Filter" class="btn btn-default" />
-    </div>
-</form>
-<br />
+	<form method="get">
+		<div class="form-inline">
+			<label class="col-form-label">Test: </label>
+			@Html.DropDownList("TestId", null, htmlAttributes: new { @class = "form-control-sm ml-2" })
+			<input type="submit" value="Filter" class="btn btn-outline-dark ml-2 btn-sm" />
+		</div>
+	</form>
+	<br />
 
-<table class="table">
-    <tr>
-        <th>
-            Test
-        </th>
-        <th>
-            Text
-        </th>
-        <th>
-            Answers
-        </th>
-        <th></th>
-    </tr>
+	<div id="loading" style="display: none; font-weight: bold;">
+		<p>Идёт загрузка...</p>
+	</div>
 
-    @foreach (var item in Model)
-    {
-        <tr id="tr_@item.Id">
-            <td>
-                @Html.DisplayFor(modelItem => item.Test.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Text)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Answers.Count)
-            </td>
-            <td>
-                @Ajax.ActionLink("Select", "Select", new  {id = item.Id }, new AjaxOptions { UpdateTargetId = "selected",
-                                                                       LoadingElementId = "loading" }, new { id = item.Id }) |
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
+	<table class="table" style="word-break: break-all;">
+		<tr class="row">
+			<th class="col-2">
+				Test
+			</th>
+			<th class="col-7">
+				Text
+			</th>
+			<th class="col-1">
+				Answers
+			</th>
+			<th class="col-2"></th>
+		</tr>
 
-</table>
-<br />
+		@foreach (var item in Model)
+		{
+			<tr id="tr_@item.Id" class="row">
+				<td class="col-2">
+					@Html.DisplayFor(modelItem => item.Test.Name)
+				</td>
+				<td class="col-7">
+					@Html.DisplayFor(modelItem => item.Text)
+				</td>
+				<td class="col-1">
+					@Html.DisplayFor(modelItem => item.Answers.Count)
+				</td>
+				<td class="col-2">
+					<a id="@item.Id" href="">Select</a> |
+					@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+					@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+				</td>
+			</tr>
+		}
 
-<div id="loading" style="display: none; font-weight: bold;">
-    <p>Идёт загрузка...</p>
+	</table>
+	<br />
+	<div id="selected"></div>
+	<br />
+
+	Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+	@Html.PagedListPager(Model, page => Url.Action("Index", new { testId = ViewBag.id, page }))
 </div>
-
-<div id="selected"></div>
-
-<br />
-
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-@Html.PagedListPager(Model, page => Url.Action("Index", new { testId = ViewBag.id, page }))
 
 <script type="text/javascript">
 
-    function setHandlers() {
-        @for (var i = 0; i < Model.Count; i++)
-        {
-            <text>
-                document.getElementById(@Model[i].Id).onclick = clickHandler;
-            </text>
-        }
-    }
-
-    function clickHandler() {
-        @for (var i = 0; i < Model.Count; i++)
-        {
-            <text>
-                document.getElementById("tr_" + @Model[i].Id).removeAttribute("style");
-            </text>
-        }
-        document.getElementById("tr_" + this.id).setAttribute("style", "background-color: #80b1b2;");
-    }
-    setHandlers();
+	@foreach (var item in Model)
+	{
+		<text>
+			$("#@item.Id").on('click', function (e) {
+				e.preventDefault();
+				$.ajax({
+					url: "/Question/Select",
+					method: 'POST',
+					data: { id: "@item.Id" },
+					success: function (data) {
+						document.getElementById('loading').style.display = "none";
+						$('#selected').html(data);
+						document.getElementById('selected').style.display = "block";
+						@foreach (var i in Model)
+						{
+							<text>
+								document.getElementById("tr_@i.Id").removeAttribute("style");
+							</text>
+						}
+						document.getElementById("tr_" + e.target.id).setAttribute("style", "background-color: #80b1b2;");
+					},
+					beforeSend: function () {
+						document.getElementById('loading').style.display = "block";
+						if (document.getElementById("tr_" + e.target.id).style.backgroundColor === "rgb(128, 177, 178)") {
+							document.getElementById("tr_" + e.target.id).removeAttribute("style");
+							document.getElementById('loading').style.display = "none";
+							document.getElementById('selected').style.display = "none";
+							this.abort();
+						}
+					},
+					error: function() {
+						document.getElementById('loading').style.display = "none";
+					}
+				});
+				e.preventDefault();
+			});
+		</text>
+	}
 </script>

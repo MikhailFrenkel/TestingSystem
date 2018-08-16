@@ -9,11 +9,13 @@ namespace TestingSystem.Model.ViewModel
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Incorrect login")]
         public string Login { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Incorrect pasword")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        public string UrlReferrer { get; set; }
     }
 }

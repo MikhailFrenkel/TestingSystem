@@ -31,29 +31,5 @@ namespace TestingSystem.DataProvider.Manager
                 RequireUniqueEmail = false
             };
         }
-
-        /*public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options,
-                                                        IOwinContext context)
-        {
-            ApplicationDbContext db = context.Get<ApplicationDbContext>();
-            ApplicationUserManager manager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
-
-            manager.PasswordValidator = new PasswordValidator
-            {
-                RequiredLength = 4,
-                RequireNonLetterOrDigit = false,
-                RequireDigit = false,
-                RequireLowercase = false,
-                RequireUppercase = false
-            };
-
-            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
-            {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = false
-            };
-
-            return manager;
-        }*/
     }
 }

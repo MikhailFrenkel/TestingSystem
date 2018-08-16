@@ -27,7 +27,7 @@ namespace TestingSystem.Website.Controllers
         public ActionResult Index()
         {
             ApplicationUser user = _userManager.FindById(User.Identity.GetUserId());
-            UserViewModel uvm = new UserViewModel(user);
+            UserViewModel uvm = new UserViewModel(user, _userManager.GetRoles(user.Id));
             return View(uvm);
         }
     }

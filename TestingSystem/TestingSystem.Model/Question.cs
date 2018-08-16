@@ -7,7 +7,7 @@ namespace TestingSystem.Model
     public class Question
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Required text")]
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }
 

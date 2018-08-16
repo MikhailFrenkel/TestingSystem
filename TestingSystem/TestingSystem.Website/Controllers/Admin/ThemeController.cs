@@ -56,6 +56,8 @@ namespace TestingSystem.Website.Controllers.Admin
                 return RedirectToAction("Index");
             }
 
+            if (!String.IsNullOrEmpty(urlReferrer))
+                ViewBag.UrlReferrer = urlReferrer;
             return View(theme);
         }
 
@@ -86,6 +88,8 @@ namespace TestingSystem.Website.Controllers.Admin
                     return Redirect(urlReferrer);
                 return RedirectToAction("Index");
             }
+            if (!String.IsNullOrEmpty(urlReferrer))
+                ViewBag.UrlReferrer = urlReferrer;
             return View(theme);
         }
 

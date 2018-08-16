@@ -1,31 +1,106 @@
-﻿@model IEnumerable<TestingSystem.Model.ViewModel.UserViewModel>
+﻿@model PagedList.IPagedList<TestingSystem.Model.ViewModel.UserViewModel>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "AllUsers";
+    ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>AllUsers</h2>
+<div class="container">
+	<h2>Users</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-    </tr>
+	<form method="get">
+		<div class="form-inline">
+			<div><input type="text" name="searchString" placeholder="Search by UserName"></div>
+			<div class="ml-2"><input type="submit" value="Search" class="btn btn-outline-dark btn-sm" /></div>
+		</div>
+	</form>
+	<br />
+	
+	<div id="loading" style="display: none; font-weight: bold;">
+		<p>Идёт загрузка...</p>
+	</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-    </tr>
-}
+	<table class="table" style="word-break: break-all;">
+		<tr>
+			<th>
+				UserName
+			</th>
+			<th>
+				Email
+			</th>
+			<th>
+				Roles
+			</th>
+			<th></th>
+		</tr>
 
-</table>
+		@foreach (var item in Model)
+		{
+			<tr id="tr_@item.UserName">
+				<td>
+					@Html.DisplayFor(modelItem => item.UserName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Email)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Roles)
+				</td>
+				<td>
+					<a id="@item.UserName" href="">Results</a>
+				</td>
+			</tr>
+		}
+
+	</table>
+	<br />
+	<div id="selected"></div>
+	<br />
+
+	Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+	@Html.PagedListPager(Model, page => Url.Action("AllUsers", new { page }))
+</div>
+
+<script type="text/javascript">
+
+	@foreach (var item in Model)
+	{
+		<text>
+			$("#@item.UserName").on('click', function(e) {
+				$.ajax({
+					url: "/Account/Result",
+					method: 'POST',
+					data: { userName: "@item.UserName" },
+					success: function (data) {
+						document.getElementById('loading').style.display = "none";
+						$('#selected').html(data);
+						document.getElementById('selected').style.display = "block";
+						@foreach (var i in Model)
+						{
+							<text>
+								document.getElementById("tr_@i.UserName").removeAttribute("style");
+							</text>
+						}
+						document.getElementById("tr_" + e.target.id).setAttribute("style", "background-color: #80b1b2;");
+					},
+					beforeSend: function () {
+						document.getElementById('loading').style.display = "block";
+						if (document.getElementById("tr_" + e.target.id).style.backgroundColor === "rgb(128, 177, 178)") {
+							document.getElementById("tr_" + e.target.id).removeAttribute("style");
+							document.getElementById('loading').style.display = "none";
+							document.getElementById('selected').style.display = "none";
+							this.abort();
+						}
+					},
+					error: function () {
+						document.getElementById('loading').style.display = "none";
+					}
+				});
+				e.preventDefault();
+			});
+		</text>
+	}
+</script>

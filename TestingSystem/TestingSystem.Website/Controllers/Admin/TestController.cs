@@ -59,7 +59,8 @@ namespace TestingSystem.Website.Controllers.Admin
                     return Redirect(urlReferrer);
                 return RedirectToAction("Index");
             }
-
+            if (!String.IsNullOrEmpty(urlReferrer))
+                ViewBag.UrlReferrer = urlReferrer;
             ViewBag.ThemeId = new SelectList(_themeRepository.GetAll().ToList(), "Id", "Title", test.ThemeId);
             return View(test);
         }
@@ -93,6 +94,8 @@ namespace TestingSystem.Website.Controllers.Admin
                 return RedirectToAction("Index");
             }
             ViewBag.ThemeId = new SelectList(_themeRepository.GetAll().ToList(), "Id", "Title", test.ThemeId);
+            if (!String.IsNullOrEmpty(urlReferrer))
+                ViewBag.UrlReferrer = urlReferrer;
             return View(test);
         }
 

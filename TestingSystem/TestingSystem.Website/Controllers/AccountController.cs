@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -9,6 +10,7 @@ using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using PagedList;
 using TestingSystem.Common.Interfaces;
 using TestingSystem.DataProvider.Manager;
 using TestingSystem.Model;
@@ -41,7 +43,7 @@ namespace TestingSystem.Website.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(string urlReferrer, LoginViewModel lvm)
+        public async Task<ActionResult> Login(LoginViewModel lvm)
         {
             if (ModelState.IsValid)
             {
@@ -59,8 +61,8 @@ namespace TestingSystem.Website.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    if (!String.IsNullOrEmpty(urlReferrer))
-                        return Redirect(urlReferrer);
+                    if (!String.IsNullOrEmpty(lvm.UrlReferrer))
+                        return Redirect(lvm.UrlReferrer);
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -75,7 +77,7 @@ namespace TestingSystem.Website.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(string urlReferrer, RegisterViewModel rvm)
+        public async Task<ActionResult> Register(RegisterViewModel rvm)
         {
             if (ModelState.IsValid)
             {
@@ -85,8 +87,8 @@ namespace TestingSystem.Website.Controllers
                 {
                     _userManager.AddToRole(user.Id, "user");
                     await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    if (!String.IsNullOrEmpty(urlReferrer))
-                        return Redirect(urlReferrer);
+                    if (!String.IsNullOrEmpty(rvm.UrlReferrer))
+                        return Redirect(rvm.UrlReferrer);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -109,14 +111,38 @@ namespace TestingSystem.Website.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult AllUsers()
+        public ActionResult AllUsers(string searchString, int? page)
         {
             List<UserViewModel> uvm = new List<UserViewModel>();
             foreach (var user in _userManager.Users)
             {
-                uvm.Add(new UserViewModel(user));
+                uvm.Add(new UserViewModel(user, _userManager.GetRoles(user.Id)));
             }
-            return View(uvm);
+
+            int pageSize = 8;
+            int pageNumber = page ?? 1;
+            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.Trim();
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    uvm = uvm.Where(x => x.UserName.Contains(searchString)).OrderBy(x => x.UserName).ToList();
+
+                    return View(uvm.ToPagedList(pageNumber, pageSize));
+                }
+            }
+            return View(uvm.OrderBy(x => x.UserName).ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpPost]
+        public ActionResult Result(string userName)
+        {
+            if (String.IsNullOrEmpty(userName))
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            List<Result> res = _userManager.FindByName(userName).Results.ToList();
+            return PartialView(res);
         }
     }
 }
