@@ -1,15 +1,11 @@
-﻿using System.Net;
-using System.Web;
+﻿using System.Web;
 using Autofac;
 using TestingSystem.DataProvider.Repositories;
 using TestingSystem.Common.Interfaces;
 using System.Web.Mvc;
 using Autofac.Integration.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.DataProtection;
 using TestingSystem.DataProvider.DataContext;
 using TestingSystem.DataProvider.Manager;
 using TestingSystem.Model;

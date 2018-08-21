@@ -14,6 +14,14 @@
 		@Html.ActionLink("Create New", "Create")
 	</p>
 
+	<form method="get">
+		<div class="form-inline">
+			<div><input type="text" name="searchString" placeholder="Search by Name"></div>
+			<div class="ml-2"><input type="submit" value="Search" class="btn btn-outline-dark btn-sm" /></div>
+		</div>
+	</form>
+	<br />
+
 	<table class="table" style="word-break: break-all;">
 		<tr class="row">
 			<th class="col-2">
@@ -41,14 +49,14 @@
 					<div class="w-100">
 						@if (item?.Description != null)
 						{
-							 if (item.Description.Length > 30)
-							 {
-								 <span>@(item.Description.Substring(0, 30) + "..."))</span>
-							 }
-							 else
-							 {
-								 <span>@item.Description</span>
-							 }
+							if (item.Description.Length > 30)
+							{
+								<span>@(item.Description.Substring(0, 30) + "..."))</span>
+							}
+							else
+							{
+								<span>@item.Description</span>
+							}
 						}
 					</div>
 				</td>

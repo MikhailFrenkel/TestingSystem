@@ -6,7 +6,7 @@
 }
 
 <div class="container">
-	@using (Html.BeginForm())
+	@using (Html.BeginForm("Edit", "Test", FormMethod.Post, new { enctype="multipart/form-data"}))
 	{
 		@Html.AntiForgeryToken()
 		@Html.Hidden("urlReferrer", ViewBag.UrlReferrer as string)
@@ -16,28 +16,44 @@
 			<hr />
 			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 			@Html.HiddenFor(model => model.Id)
+			
+			<div class="row">
+				<div class="col-6">
+					<div class="form-group">
+						@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "col-form-label col-md-2 font-weight-bold" })
+						<div class="col-md-12">
+							@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+						</div>
+					</div>
 
-			<div class="form-group">
-				@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "col-form-label col-md-2 font-weight-bold" })
-				<div class="col-md-6">
-					@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+					<div class="form-group">
+						@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "col-form-label col-md-2 font-weight-bold" })
+						<div class="col-md-12">
+							@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "col-form-label col-md-2 font-weight-bold" })
+						<div class="col-md-12">
+							@Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+						</div>
+					</div>
 				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "col-form-label col-md-2 font-weight-bold" })
-				<div class="col-md-6">
-					@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "col-form-label col-md-2 font-weight-bold" })
-				<div class="col-md-6">
-					@Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+				<div class="col-6 mt-4">
+					<div class="row">
+						<div class="col">
+							<div style="height: 300px;">
+								<img class="img-thumbnail"src="@Url.Action("GetImage", "Test", new {id = Model.Id})" style="max-height: 100%">
+							</div>
+						</div>
+						<div class="col">
+							<input type="file" name="uploadImage" accept="image/png, image/jpeg">
+						</div>
+					</div>
 				</div>
 			</div>
 

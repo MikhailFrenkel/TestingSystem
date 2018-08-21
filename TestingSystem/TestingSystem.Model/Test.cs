@@ -19,6 +19,11 @@ namespace TestingSystem.Model
 
         public virtual List<Question> Questions { get; set; }
 
+        public string ExtensionImage { get; set; }
         public byte[] Image { get; set; }
+
+        public Test()
+        {
+        }
     }
 }

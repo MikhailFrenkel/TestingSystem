@@ -101,8 +101,6 @@
     <Compile Include="Repositories\QuestionRepository.cs" />
     <Compile Include="Repositories\ResultRepository.cs" />
     <Compile Include="Repositories\TestRepository.cs" />
-    <Compile Include="Repositories\ThemeRepository.cs" />
-    <Compile Include="Repositories\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

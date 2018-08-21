@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using TestingSystem.Common.Interfaces;
@@ -19,38 +20,45 @@ namespace TestingSystem.Website.Controllers.Admin
             _testRepository = test;
         }
 
-        public ActionResult Index(int? themeId, int? page)
+        public ActionResult Index(string searchString, int? page)
         {
             int pageSize = 8;
             int pageNumber = page ?? 1;
-            List<Theme> themes = new List<Theme>() {new Theme {Id = 0, Title = "All"} };
-            themes.AddRange(_themeRepository.GetAll().OrderBy(x => x.Title).ToList());
-            ViewBag.ThemeId = new SelectList(themes, "Id", "Title");
-            ViewBag.id = themeId;
-            if (themeId != null && themeId != 0)
+
+            if (!String.IsNullOrEmpty(searchString))
             {
-                Theme theme = _themeRepository.GetById((int)themeId);
-                if (theme != null)
+                searchString = searchString.Trim();
+                if (!String.IsNullOrEmpty(searchString))
                 {
-                    return View(theme.Tests.OrderBy(x => x.Theme.Title).ToPagedList(pageNumber, pageSize));
+                    List<Test> tests = _testRepository.GetAll().Where(x => x.Name.Contains(searchString)).ToList();
+                    return View(tests.ToPagedList(pageNumber, pageSize));
                 }
             }
+
             return View(_testRepository.GetAll().OrderBy(x => x.Name).ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Create()
         {
             ViewBag.UrlReferrer = Request.UrlReferrer;
-            ViewBag.ThemeId = new SelectList(_themeRepository.GetAll().ToList(), "Id", "Title");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(string urlReferrer, Test test)
+        public ActionResult Create(string urlReferrer, Test test, HttpPostedFileBase uploadImage)
         {
             if (ModelState.IsValid)
             {
+                if (uploadImage != null)
+                {
+                    if (uploadImage.ContentType == "image/jpg" || uploadImage.ContentType == "image/png")
+                    {
+                        test.ExtensionImage = uploadImage.ContentType;
+                        test.Image = new byte[uploadImage.ContentLength];
+                        uploadImage.InputStream.Read(test.Image, 0, uploadImage.ContentLength);
+                    }
+                }
                 _testRepository.Create(test);
                 _testRepository.Save();
                 if (!String.IsNullOrEmpty(urlReferrer))
@@ -59,7 +67,6 @@ namespace TestingSystem.Website.Controllers.Admin
             }
             if (!String.IsNullOrEmpty(urlReferrer))
                 ViewBag.UrlReferrer = urlReferrer;
-            ViewBag.ThemeId = new SelectList(_themeRepository.GetAll().ToList(), "Id", "Title", test.ThemeId);
             return View(test);
         }
 
@@ -75,23 +82,30 @@ namespace TestingSystem.Website.Controllers.Admin
                 return HttpNotFound();
             }
             ViewBag.UrlReferrer = Request.UrlReferrer;
-            ViewBag.ThemeId = new SelectList(_themeRepository.GetAll().ToList(), "Id", "Title", test.ThemeId);
             return View(test);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string urlReferrer, Test test)
+        public ActionResult Edit(string urlReferrer, Test test, HttpPostedFileBase uploadImage)
         {
             if (ModelState.IsValid)
             {
+                if (uploadImage != null)
+                {
+                    if (uploadImage.ContentType == "image/jpg" || uploadImage.ContentType == "image/png")
+                    {
+                        test.ExtensionImage = uploadImage.ContentType;
+                        test.Image = new byte[uploadImage.ContentLength];
+                        uploadImage.InputStream.Read(test.Image, 0, uploadImage.ContentLength);
+                    }
+                }
                 _testRepository.Update(test);
                 _testRepository.Save();
                 if (!String.IsNullOrEmpty(urlReferrer))
                     return Redirect(urlReferrer);
                 return RedirectToAction("Index");
             }
-            ViewBag.ThemeId = new SelectList(_themeRepository.GetAll().ToList(), "Id", "Title", test.ThemeId);
             if (!String.IsNullOrEmpty(urlReferrer))
                 ViewBag.UrlReferrer = urlReferrer;
             return View(test);
@@ -121,6 +135,18 @@ namespace TestingSystem.Website.Controllers.Admin
             if (!String.IsNullOrEmpty(urlReferrer))
                 return Redirect(urlReferrer);
             return RedirectToAction("Index");
+        }
+
+        [AllowAnonymous]
+        public FileContentResult GetImage(int id)
+        {
+            Test test = _testRepository.GetById(id);
+            if (test?.Image != null)
+            {
+                return File(test.Image, test.ExtensionImage);
+            }
+
+            return null;
         }
     }
 }

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TestingSystem.Common.Interfaces;
@@ -54,6 +53,8 @@ namespace TestingSystem.Website.Controllers
             Test test = _testRepository.GetById((int)id);
             if (test == null)
                 return HttpNotFound();
+            if (test.Questions?.Count == 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             TestViewModel tvm = new TestViewModel(test);
             return View(tvm);
         }

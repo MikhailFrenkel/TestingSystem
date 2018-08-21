@@ -54,6 +54,15 @@ namespace TestingSystem.DataProvider.Repositories
         public void Update(Test item)
         {
             db.Entry(item).State = EntityState.Modified;
+            /*Test test = db.Tests.Find(item.Id);
+            test.Duration = item.Duration;
+            test.Description = item.Description;
+            test.Name = item.Name;
+            if (item.Image != null)
+            {
+                test.ExtensionImage = item.ExtensionImage;
+                test.Image = item.Image;
+            }*/
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model List<TestingSystem.Model.Theme>
+﻿@model List<TestingSystem.Model.Test>
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
 	ViewBag.Title = "Main page";
@@ -10,22 +10,21 @@
 		<div class="card-deck justify-content-center">
 			@for (int i = 0; i < Model.Count; i++)
 			{
-				if (Model[i].Tests.Count != 0)
-				{
-
-					<div class="card m-4" style="max-width: 28%; min-width: 28%;">
-						<h6 class="card-header">@Model[i].Title</h6>
-						<div class="card-body justify-content-center">
-							@foreach (var test in Model[i].Tests)
-							{
-								<div class="row">
-									@Html.ActionLink(test.Name, "Test", new { id = test.Id }, new { @class = "btn btn-sm btn-outline-info btn-block mb-2" })
-								</div>
-							}
+				<div class="card text-center m-4 border-secondary card-width">
+					<div class="card-img-top pt-2" style="height: 150px;">
+						<img style="max-height: 100%; max-width: 100%;" src="@Url.Action("GetImage", "Test", new { id = Model[i].Id})">
+					</div>
+					<div class="card-body">
+						<h5 class="card-title" style="color: #008CBA;">@Model[i].Name</h5>
+						<div class="card-text">
+							<span style="color: #42A5F5;">Count questions - @(Model[i]?.Questions.Count) <br />
+								Time - @Model[i].Duration</span>
 						</div>
 					</div>
-				
-				}
+					<a class="btn btn-primary" href="/Home/Test/@Model[i].Id" style="border-radius: 0; background-color: #008CBA;">
+						<span style="color: white;">GO</span>
+					</a>
+				</div>
 			}
 		</div>
 	</div>

@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using WebGrease.Css.Extensions
 <!DOCTYPE html>
 
 <html style="height: 100%;">
@@ -6,11 +7,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>@ViewBag.Title</title>
-	<!--<link rel="stylesheet" href="~/Content/bootstrap.min.css">
-	<link rel="stylesheet" href="~/Content/Site.css">
-	<script src="~/Scripts/modernizr-2.6.2.js"></script>
-	<script src="~/Scripts/jquery-3.0.0.js"></script>
-	<script src="~/Scripts/bootstrap.min.js"></script>-->
 	@Styles.Render("~/Content/css")
 	@Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/modernizr")
@@ -18,25 +14,24 @@
 </head>
     <body style="height: 100%;">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-            <div class="container-fluid">
-                @Html.ActionLink("NewTestingSystem", "Index", "Home", null, new { @class = "navbar-brand" })
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" 
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        @if (User.IsInRole("admin"))
-                        {
-                            <li class="nav-item">@Html.ActionLink("Theme", "Index", "Theme", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Test", "Index", "Test", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Question", "Index", "Question", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("User", "AllUsers", "Account", null, new { @class = "nav-link" })</li>
-                        }
-                    </ul>
-                    @Html.Partial("~/Views/Partial/_LoginPartial.cshtml")
-                </div>
-            </div>
+	        <div class="container-fluid">
+				<a class="navbar-brand" href="/Home/Index/"><span style="color: white;">Testing</span><b style="color: orange">System</b></a>
+		        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent"
+		                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			        <span class="navbar-toggler-icon"></span>
+		        </button>
+		        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			        <ul class="navbar-nav mr-auto">
+				        @if (User.IsInRole("admin"))
+				        {
+					        <li class="nav-item">@Html.ActionLink("Test", "Index", "Test", null, new {@class = "nav-link"})</li>
+					        <li class="nav-item">@Html.ActionLink("Question", "Index", "Question", null, new {@class = "nav-link"})</li>
+					        <li class="nav-item">@Html.ActionLink("User", "AllUsers", "Account", null, new {@class = "nav-link"})</li>
+				        }
+			        </ul>
+			        @Html.Partial("~/Views/Partial/_LoginPartial.cshtml")
+		        </div>
+	        </div>
        </nav>
         
         @RenderBody()

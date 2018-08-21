@@ -80,7 +80,6 @@
     <Compile Include="Question.cs" />
     <Compile Include="Result.cs" />
     <Compile Include="Test.cs" />
-    <Compile Include="Theme.cs" />
     <Compile Include="ViewModel\AnswerViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\QuestionViewModel.cs" />

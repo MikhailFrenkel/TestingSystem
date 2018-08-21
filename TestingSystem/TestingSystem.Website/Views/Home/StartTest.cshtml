@@ -15,8 +15,8 @@
 			@Html.HiddenFor(model => model.Id)
 			@Html.HiddenFor(model => model.Name)
 
-			<h2>@Model.Name</h2>
-			<div>Time remaining: <span id="minRemaining"></span>:<span id="secRemaining"></span></div>
+			<h2 style="color: orangered;">@Model.Name</h2>
+			<div style="color: #008CBA; font-size: 1.25rem;">Time remaining: <span id="minRemaining"></span>:<span id="secRemaining"></span></div>
 			<hr>
 			<ol class="list-group">
 				@for (int i = 0; i < Model.Questions.Count; i++)
@@ -24,24 +24,25 @@
 					@Html.HiddenFor(model => model.Questions[i].Id)
 					@Html.HiddenFor(model => model.Questions[i].Text)
 					<li>
-						<ul>@Html.DisplayFor(model => model.Questions[i].Text)
+						<ul>
+							<span style="font-size: 1.5rem;">@Model.Questions[i].Text</span>
 							@for (int j = 0; j < Model.Questions[i].Answers.Count; j++)
 							{
 								if (Model.Questions[i].CorrectAnswers.Count > 1)
 								{
 									<li>
-										<input type="checkbox" name="Questions[@i].CorrectAnswers"
+										<input id="@Model.Questions[i].Answers[j].Id" type="checkbox" name="Questions[@i].CorrectAnswers"
 										       value="@Model.Questions[i].Answers[j].Id"/>
-										@Model.Questions[i].Answers[j].Text
+										<label for="@Model.Questions[i].Answers[j].Id" style="font-size: 1.25rem;" class="label-hover">@Model.Questions[i].Answers[j].Text</label>
 									</li>
 								}
 								else
 								{
 									<li>
-										<input type="radio" name="Questions[@i].CorrectAnswers"
+										<input id="@Model.Questions[i].Answers[j].Id" type="radio" name="Questions[@i].CorrectAnswers"
 										       value="@Model.Questions[i].Answers[j].Id"/>
-										@Model.Questions[i].Answers[j].Text
-									</li>
+										<label for="@Model.Questions[i].Answers[j].Id" style="font-size: 1.25rem;" class="label-hover">@Model.Questions[i].Answers[j].Text</label>
+</li>
 								}
 							}
 						</ul><hr/>
@@ -49,7 +50,7 @@
 				}
 			</ol>
 			<div class="form-group">
-				<div class="col-md-10">
+				<div class="mt-4">
 					<input type="submit" value="Save" class="btn btn-primary"/>
 				</div>
 			</div>
@@ -63,35 +64,36 @@
     var secondsCounter = remSeconds % 60;
 
     function formatNumber(number) {
-        if (number < 10)
-            return '0' + number;
-        else
-            return '' + number;
+	    if (number < 10)
+		    return '0' + number;
+	    else
+		    return '' + number;
 
     }
 
     function startTick() {
-        document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
-        document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
+	    document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+	    document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds / 60));
 
-        var _tick = setInterval(function() {
-            if(remSeconds > 0) {
-                remSeconds--;
-                secondsCounter--;
+	    var _tick = setInterval(function() {
+			    if (remSeconds > 0) {
+				    remSeconds--;
+				    secondsCounter--;
 
-                if(secondsCounter < 0)
-                    secondsCounter = 59;
+				    if (secondsCounter < 0)
+					    secondsCounter = 59;
 
-                document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
-                document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds/60));
-            }
-            else {
-                alert('Time over');
-                clearInterval(_tick);
-                document.getElementById('form').submit();
-            }
-        }, 1000);
+				    document.getElementById('secRemaining').innerText = formatNumber(secondsCounter);
+				    document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds / 60));
+			    } else {
+				    alert('Time over');
+				    clearInterval(_tick);
+				    document.getElementById('form').submit();
+			    }
+		    },
+		    1000);
 
     }
+
     startTick();
 </script>

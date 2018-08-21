@@ -6,36 +6,36 @@
 
 <div class="container-fluid p-4" style="background-color: #eee; min-height:91%">
 	<div class="container">
-		<h2>@Model.TestName</h2>
+		<h2 style="color: orangered;">@Model.TestName</h2>
 
-		<span>You answered on @Model.CountCorrectQuestion of @Model.CountQuestions questions</span>
+		<span style="color: #008CBA; font-size: 1.25rem;">You answered on @Model.CountCorrectQuestion of @Model.CountQuestions questions</span>
 		<hr>
 
 		<ol>
 			@foreach (var question in Model.Questions)
 			{
 				<li>
-					<ul>@question.Text
+					<ul><span style="font-size: 1.5rem;">@question.Text</span>
 						@foreach (var answer in question.Answers)
 						{
 							if (question.CorrectAnswers != null)
 							{
 								if (question.CorrectAnswers.Contains(answer.Id) && answer.IsCorrect)
 								{
-									<li style="color: green">@answer.Text</li>
+									<li style="color: green; font-size: 1.25rem;">@answer.Text</li>
 								}
 								else if (question.CorrectAnswers.Contains(answer.Id) && !answer.IsCorrect)
 								{
-									<li style="color: red">@answer.Text</li>
+									<li style="color: red; font-size: 1.25rem;">@answer.Text</li>
 								}
 								else
 								{
-									<li>@answer.Text</li>
+									<li style="font-size: 1.25rem;">@answer.Text</li>
 								}
 							}
 							else
 							{
-								<li>@answer.Text</li>
+								<li style="font-size: 1.25rem;">@answer.Text</li>
 							}
 						}
 					</ul>

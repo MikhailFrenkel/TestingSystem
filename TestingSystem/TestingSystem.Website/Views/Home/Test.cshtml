@@ -8,36 +8,44 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="card w-75 text-center">
-				<h4 class="card-header">@Model.Name</h4>
-				<div class="card-body">
+				<h4 class="card-header" style="background-color: #ffd449;"><span style="color: white;">@Model.Name</span></h4>
+				<div class="card-img p-2" style="height: 200px; background-color: #e8e8e8;">
+					<img src="@Url.Action("GetImage","Test", new { id = Model.Id})" style="max-height: 100%;">
+				</div>
+				<div class="card-body" style="background-color: #e8e8e8;">
 					<div class="card-title">
-						<span>Count questions: @Model.Questions.Count | Time: @Model.Duration min</span>
+						<span style="color: #008CBA;">Count questions: @Model.Questions.Count | Time: @Model.Duration min</span>
 					</div>
 					<div class="card-text">
-						<span>@Model.Description</span>
-					</div>
-					<div>
-						@if (Request.IsAuthenticated)
-						{
-							if (Model.IsCanPass)
-							{
-								@Html.ActionLink("Start", "StartTest", new {id = Model.Id}, new {@class = "btn btn-primary"})
-							}
-							else
-							{
-								@Html.ActionLink("Start", "StartTest", new {id = Model.Id}, new {@class = "btn btn-primary disabled"})
-							}
-						}
-						else
-						{
-							<span>Для прохождения теста авторизируйтесь:</span>
-							<div>
-								@Html.ActionLink("Login", "Login", "Account", null, new {@class = "btn btn-primary"})
-								@Html.ActionLink("Register", "Register", "Account", null, new {@class = "btn btn-primary"})
-							</div>
-						}
+						<span style="color: #42A5F5;">@Model.Description</span>
 					</div>
 				</div>
+				@if (Request.IsAuthenticated)
+				{
+					if (Model.IsCanPass)
+					{
+						<a class="btn btn-primary" href="/Home/StartTest/@Model.Id" style="border-radius: 0; background-color: #008CBA;">
+							<span style="color: white;">Start</span>
+						</a>
+					}
+					else
+					{
+						<a class="btn btn-primary disabled" href="/Home/StartTest/@Model.Id" style="border-radius: 0; background-color: #008CBA;">
+							<span style="color: white;">Start</span>
+						</a>
+						@*Html.ActionLink("Start", "StartTest", new { id = Model.Id }, new { @class = "btn btn-primary disabled" })*@
+					}
+				}
+				else
+				{
+					<div style="background-color: #e8e8e8; border-top: solid 1px #ffd449;">
+						<span style="color: #008CBA;">You must log in:</span>
+						<div class="mb-2">
+							@Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-outline-primary mr-1" })
+							@Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-outline-primary ml-1" })
+						</div>
+					</div>
+				}
 			</div>
 		</div>
 	</div>

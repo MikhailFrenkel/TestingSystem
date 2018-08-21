@@ -1,55 +1,49 @@
 ﻿@model TestingSystem.Model.ViewModel.UserViewModel
 
 @{
-    ViewBag.Title = "My Account";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "My Account";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <dl class="container">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-    </dl>
-    
-    <h4>Your tests results:</h4>
-    <table class="table">
-        <tr>
-            <th>Test</th>
-            <th>Count Correct Questions</th>
-            <th>Count Questions</th>
-            <th>Date of passing</th>
-        </tr>
-        @if (Model.Results.Count != 0)
-        {
-            foreach (var item in Model.Results)
-            {
-                <tr>
-                    <td>@item.TestName</td>
-                    <td>@item.CountCorrectQuestion</td>
-                    <td>@item.CountQuestions</td>
-                    <td>@item.DateOfPassing</td>
-                </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="4" class="align-content-center"><span style="font-size: 16px;">You haven't any results</span></td>
-            </tr>
-        }
-    </table>
+<div class="container-fluid p-2" style="background-color: white; min-height: 91%">
+	<div class="container">
+		<div class="row mt-4">
+			<div class="col-3">
+				<div style="border: solid 1px #EEEEEE;">
+					<div class="text-right">
+						<a class="btn btn-sm btn-block" style="background-color: #eee; border-radius: 0;">
+							<span style="color: #008CBA; font-size: 1rem;">Edit</span>
+						</a>
+					</div>
+					<div class="text-center mt-4" style="height: 150px;">
+						<img class="p-2" src="~/images/user.png" style="border-radius: 100px; border: solid 1px #EEEEEE; max-height: 100%;">
+					</div>
+					<div class="text-center">
+						<span style="color: #EF5350; font-weight: 600; font-size: 1.5rem;">@Model.UserName</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-7">
+				<div class="ml-3"><span style="color: #0F8DD9; font-size: 1.5rem;">Your tests results</span></div>
+				<div>
+					@foreach (var test in Model.Results)
+					{
+						<div class="my-1" style="background-color: #eee">
+							<a class="row p-2">
+								<div class="col-6 ml-4">
+									<span style="color: #42A5F5; font-size: 1.3rem">@test.TestName 
+										<sup style="color: #BDBDBD; font-size: 0.75rem">@test.DateOfPassing</sup>
+									</span>
+								</div>
+								<div class="col-4 text-center">
+									<span style="color: #8c4100;">@test.CountCorrectQuestion from @test.CountQuestions!</span>
+								</div>
+							</a>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-

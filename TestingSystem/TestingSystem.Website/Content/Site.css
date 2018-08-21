@@ -1,12 +1,37 @@
-﻿.my-width {
-	width: 50%;
+﻿.answer {
+	border: solid 1px;
+	background-color: #d8d8d8;
+	cursor: pointer;
 }
 
+.container-img {
+	max-height: 150px;
+	min-height: 150px;
+	padding: 10px;
+}
 
-@media screen and (max-width: 640px) {
-	.my-width {
-		width: 100%;
+.card-width {
+	min-width: 20%;
+	max-width: 20%;
+}
+
+@media screen and (max-width: 993px) {
+	.card-width {
+		min-width: 25%;
+		max-width: 25%;
 	}
 }
 
+@media screen and (max-width: 768px) {
+	.card-width {
+		min-width: 30%;
+		max-width: 30%;
+	}
+}
 
+@media screen and (max-width: 575px) {
+	.card-width {
+		min-width: 50%;
+		max-width: 50%;
+	}
+}
